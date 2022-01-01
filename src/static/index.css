@@ -1,0 +1,86 @@
+.page_loading {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box {
+    perspective: 120px;
+}
+
+.coin {
+    width: 4em;
+    height: 4em;
+    border-radius: 50%;
+    border: 4px solid #3cefff;
+    animation: spin 1.2s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotateY(540deg);
+    }
+}
+.social_login {
+    width: 90% !important;
+    height: 36px !important;
+    margin-bottom: 20px;
+    border: 0 !important;
+    border-bottom: 0 !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 0 !important;
+}
+
+.social_login > i.fa.fa-facebook {
+    margin-right: 10px;
+    background: rgb(255, 255, 255);
+    padding: 10px;
+    border-radius: 2px;
+    font-size: 20px;
+}
+
+.social_login > div,
+.social_login > i.fa.fa-facebook {
+    width: 60px;
+    border-right: 1px solid #ccc;
+    height: 36px !important;
+    color: white !important;
+}
+
+.social_login > div {
+    background-color: #f58e17 !important;
+    border-top-left-radius: 20px !important;
+    border-bottom-left-radius: 20px !important;
+}
+.social_login > i.fa.fa-facebook {
+    background-color: #4285f4 !important;
+    border-top-left-radius: 20px !important;
+    border-bottom-left-radius: 20px !important;
+}
+
+.social_login.bg-fb {
+    border-radius: 20px;
+    background-color: #4285f4 !important;
+    color: white !important;
+    cursor: pointer;
+    font-weight: 600 !important;
+    margin: 0 auto !important;
+    margin-bottom: 16px !important;
+}
+
+.social_login.bg-fb:hover {
+    opacity: 0.85;
+}
+
+.social_login.bg-gg {
+    border-radius: 20px !important;
+    background-color: #f58e17 !important;
+    color: white !important;
+    margin: 0 auto !important;
+    margin-bottom: 16px !important;
+}
