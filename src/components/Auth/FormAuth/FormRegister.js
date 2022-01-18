@@ -1,21 +1,15 @@
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { Box, Button, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import IconButton from '@mui/material/IconButton';
 import Input from '@mui/material/Input';
 import InputAdornment from '@mui/material/InputAdornment';
 import InputLabel from '@mui/material/InputLabel';
 import React from 'react';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormLabel from '@mui/material/FormLabel';
-import GetNotification from '../../../utils/GetNotification';
-import { ValidRegister } from '../../../utils/ValidAuth';
-import { register } from '../../../redux/actions/authAction';
 import { useDispatch } from 'react-redux';
-import SocialLogin from '../Social';
+import { register } from '../../../redux/actions/authAction';
+import { ValidRegister } from '../../../utils/ValidAuth';
 const initialState = {
     username: '',
     gender: 'male',

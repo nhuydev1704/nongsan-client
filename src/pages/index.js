@@ -1,14 +1,10 @@
-import React from 'react';
-import Filter from '../components/Filter';
-import LayoutComponent from '../components/global/LayoutComponent';
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import Rating from '@mui/material/Rating';
-import ItemProduct from '../components/Products/ItemProduct';
+import React from 'react';
 import { useSelector } from 'react-redux';
+import LayoutComponent from '../components/global/LayoutComponent';
 import DetailProduct from '../components/Products/DetailProduct';
+import ItemProduct from '../components/Products/ItemProduct';
 
 const HomePage = () => {
     const [openDraw, setOpenDraw] = React.useState(false);
@@ -19,7 +15,7 @@ const HomePage = () => {
     return (
         <LayoutComponent>
             Title
-            <Filter />
+            {/* <Filter /> */}
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={3}>
                     {products.products &&
