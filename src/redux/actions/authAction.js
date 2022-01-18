@@ -1,4 +1,4 @@
-import { postDataAPI } from '../../api/fetchData';
+import { getDataAPI, postDataAPI } from '../../api/fetchData';
 import GetNotification from '../../utils/GetNotification';
 import axios from 'axios';
 export const TYPES = {
@@ -66,7 +66,7 @@ export const refreshToken = () => async (dispatch) => {
     if (firstLogin) {
         dispatch({ type: 'LOADING', payload: true });
         try {
-            const res = await postDataAPI('refresh_token');
+            const res = await getDataAPI('refresh_token');
             if (res.status === 200) {
                 dispatch({ type: 'AUTH', payload: { token: res.data.access_token, user: res.data.user } });
             }
