@@ -31,7 +31,7 @@ const AuthPage = () => {
                             </p>
                         </div>
                         <div className="pt-2 flex flex-row justify-center items-center space-x-3">
-                            {/* <SocialLogin /> */}
+                            <SocialLogin />
                         </div>
                         <div className="flex items-center justify-center space-x-2">
                             <span className="h-px w-16 bg-gray-300"></span>

@@ -18,9 +18,9 @@ function App() {
     const dispatch = useDispatch();
 
     React.useEffect(() => {
-        dispatch(refreshToken());
         dispatch(getCategories());
         dispatch(getProducts());
+        dispatch(refreshToken());
     }, [dispatch]);
 
     React.useEffect(() => {
