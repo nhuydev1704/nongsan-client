@@ -2,7 +2,8 @@ import { validateEmail } from './common';
 import GetNotification from './GetNotification';
 
 export const ValidRegister = (data) => {
-    if (!data.fullname || !data.username || !data.gender || !data.email || !data.password || !data.re_password) {
+    console.log('🚀 ~ file: ValidAuth.js ~ line 5 ~ ValidRegister ~ data', data);
+    if (!data.username || !data.email || !data.password || !data.re_password) {
         return GetNotification('Vui lòng điền đầy đủ thông tin!', 'error');
     }
 

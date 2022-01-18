@@ -6,6 +6,7 @@ import './static/index.css';
 import 'react-toastify/dist/ReactToastify.css';
 import DataProvider from './redux/store';
 import { ToastContainer } from 'react-toastify';
+import './index.css';
 ReactDOM.render(
     <React.StrictMode>
         <DataProvider>
@@ -20,7 +21,6 @@ ReactDOM.render(
                 pauseOnHover
             />
             <App />
-            <ToastContainer />
         </DataProvider>
     </React.StrictMode>,
     document.getElementById('root')

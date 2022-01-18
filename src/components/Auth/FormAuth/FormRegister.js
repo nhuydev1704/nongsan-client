@@ -7,7 +7,6 @@ import Input from '@mui/material/Input';
 import InputAdornment from '@mui/material/InputAdornment';
 import InputLabel from '@mui/material/InputLabel';
 import React from 'react';
-import styled from 'styled-components';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -16,8 +15,8 @@ import GetNotification from '../../../utils/GetNotification';
 import { ValidRegister } from '../../../utils/ValidAuth';
 import { register } from '../../../redux/actions/authAction';
 import { useDispatch } from 'react-redux';
+import SocialLogin from '../Social';
 const initialState = {
-    fullname: '',
     username: '',
     gender: 'male',
     email: '',
@@ -27,9 +26,6 @@ const initialState = {
     showRePassword: false,
 };
 
-const DivStyled = styled.div`
-    margin-top: 20px;
-`;
 const FormRegister = ({ setIslogin }) => {
     const [values, setValues] = React.useState(initialState);
 
@@ -49,7 +45,7 @@ const FormRegister = ({ setIslogin }) => {
     const handleClickShowRePassword = () => {
         setValues({
             ...values,
-            showRePassword: !values.showPassword,
+            showRePassword: !values.showRePassword,
         });
     };
 
@@ -64,114 +60,91 @@ const FormRegister = ({ setIslogin }) => {
         }
     };
     return (
-        <Box
-            sx={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                flexDirection: 'column',
-                width: '70%',
-                marginLeft: '20px',
-            }}
-        >
-            <TextField
-                style={{ marginTop: '10px' }}
-                id="standard-basic"
-                value={values.fullname}
-                onChange={handleChange('fullname')}
-                label="Họ và tên"
-                variant="standard"
-                type="text"
-                autoComplete="off"
-            />
-            <TextField
-                style={{ marginTop: '10px' }}
-                id="standard-basic"
-                value={values.username}
-                onChange={handleChange('username')}
-                label="Tên tài khoản"
-                variant="standard"
-                type="text"
-                autoComplete="off"
-            />
-            <TextField
-                style={{ marginTop: '10px' }}
-                inputProps={{
-                    autoComplete: 'email',
-                    form: {
+        <div className="mt-2 space-y-5">
+            <div className="content-center">
+                <TextField
+                    id="standard-basic"
+                    value={values.username}
+                    onChange={handleChange('username')}
+                    label="Họ và tên"
+                    variant="standard"
+                    type="text"
+                    autoComplete="off"
+                    fullWidth
+                />
+            </div>
+            <div className="mt-4 content-center">
+                <TextField
+                    inputProps={{
                         autoComplete: 'email',
-                    },
-                }}
-                id="standard-basic"
-                value={values.email}
-                onChange={handleChange('email')}
-                label="Địa chỉ email"
-                variant="standard"
-                type="email"
-            />
-            <FormControl sx={{ marginTop: '10px' }} variant="standard">
-                <InputLabel htmlFor="standard-adornment-password">Mật khẩu</InputLabel>
-                <Input
-                    id="standard-adornment-password"
-                    type={values.showPassword ? 'text' : 'password'}
-                    value={values.password}
-                    onChange={handleChange('password')}
-                    endAdornment={
-                        <InputAdornment position="end">
-                            <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={handleClickShowPassword}
-                                onMouseDown={handleMouseDownPassword}
-                            >
-                                {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                        </InputAdornment>
-                    }
+                        form: {
+                            autoComplete: 'email',
+                        },
+                    }}
+                    fullWidth
+                    id="standard-basic"
+                    value={values.email}
+                    onChange={handleChange('email')}
+                    label="Địa chỉ email"
+                    variant="standard"
+                    type="email"
                 />
-            </FormControl>
-            <FormControl sx={{ marginTop: '10px' }} variant="standard">
-                <InputLabel htmlFor="standard-adornment-password">Nhập lại mật khẩu</InputLabel>
-                <Input
-                    id="standard-adornment-password"
-                    type={values.showRePassword ? 'text' : 'password'}
-                    value={values.re_password}
-                    onChange={handleChange('re_password')}
-                    endAdornment={
-                        <InputAdornment position="end">
-                            <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={handleClickShowRePassword}
-                                onMouseDown={handleMouseDownPassword}
-                            >
-                                {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                        </InputAdornment>
-                    }
-                />
-            </FormControl>
-            <FormControl sx={{ marginTop: '20px' }} component="fieldset">
-                <FormLabel component="legend">Giới tính</FormLabel>
-                <RadioGroup
-                    value={values.gender}
-                    onChange={handleChange('gender')}
-                    row
-                    aria-label="gender"
-                    name="row-radio-buttons-group"
+            </div>
+            <div className="mt-4 content-center">
+                <FormControl fullWidth variant="standard">
+                    <InputLabel htmlFor="standard-adornment-password">Mật khẩu</InputLabel>
+                    <Input
+                        id="standard-adornment-password"
+                        type={values.showPassword ? 'text' : 'password'}
+                        value={values.password}
+                        onChange={handleChange('password')}
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                >
+                                    {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                        }
+                    />
+                </FormControl>
+            </div>
+            <div className="mt-4 content-center">
+                <FormControl fullWidth variant="standard">
+                    <InputLabel htmlFor="standard-adornment-password">Nhập lại mật khẩu</InputLabel>
+                    <Input
+                        id="standard-adornment-password"
+                        type={values.showRePassword ? 'text' : 'password'}
+                        value={values.re_password}
+                        onChange={handleChange('re_password')}
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowRePassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                >
+                                    {values.showRePassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                        }
+                    />
+                </FormControl>
+            </div>
+
+            <div>
+                <button
+                    onClick={onSubmit}
+                    className="w-full flex justify-center bg-indigo-500 text-gray-100 p-3 rounded-full tracking-wide
+                                font-semibold  focus:outline-none focus:shadow-outline hover:bg-indigo-600 shadow-lg cursor-pointer transition ease-in duration-300"
                 >
-                    <FormControlLabel value="male" control={<Radio />} label="Nam" />
-                    <FormControlLabel value="female" control={<Radio />} label="Nữ" />
-                    <FormControlLabel value="other" control={<Radio />} label="Khác" />
-                </RadioGroup>
-            </FormControl>
-            <Button variant="contained" type="submit" onClick={onSubmit} style={{ marginTop: '30px' }}>
-                Đăng ký
-            </Button>
-            <DivStyled>
-                Bạn đã có tài khoản{' '}
-                <Button onClick={() => setIslogin(true)} variant="text">
-                    Đăng nhập ngay?
-                </Button>
-            </DivStyled>
-        </Box>
+                    Đăng ký
+                </button>
+            </div>
+        </div>
     );
 };
 

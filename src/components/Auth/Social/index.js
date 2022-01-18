@@ -1,12 +1,7 @@
 import React from 'react';
 import GoogleLogin from 'react-google-login';
-import styled from 'styled-components';
 import FacebookLogin from 'react-facebook-login';
-const DivStyled = styled.div`
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-`;
+
 const SocialLogin = () => {
     const responseGoogle = (response) => {
         console.log(response);
@@ -17,10 +12,10 @@ const SocialLogin = () => {
     };
 
     return (
-        <DivStyled>
-            {/* <GoogleLogin
+        <div className="flex flex-row justify-center items-center space-x-3">
+            <GoogleLogin
                 clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
-                buttonText="Đăng nhập với google"
+                buttonText=""
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
                 cookiePolicy={'single_host_origin'}
@@ -32,10 +27,10 @@ const SocialLogin = () => {
                 fields="name,email,picture"
                 callback={responseFacebook}
                 icon="fa-facebook"
-                textButton="Đăng nhập với facebook"
+                textButton=""
                 cssClass="social_login bg-fb"
-            /> */}
-        </DivStyled>
+            />
+        </div>
     );
 };
 

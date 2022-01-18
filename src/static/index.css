@@ -18,13 +18,46 @@
     animation: spin 1.2s ease-in-out infinite;
 }
 
+html,
+body {
+    scroll-behavior: smooth;
+}
+
+body {
+    overflow-x: hidden;
+    background-color: rgba(148, 163, 184, 0.13);
+}
+
+body::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #d8d5d5;
+    border-radius: 10px;
+}
+
+body::-webkit-scrollbar {
+    width: 10px;
+    background-color: #f5f5f5;
+}
+
+body::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.44, rgb(122, 153, 217)),
+        color-stop(0.72, rgb(73, 125, 189)),
+        color-stop(0.86, rgb(28, 58, 148))
+    );
+}
+
 @keyframes spin {
     to {
         transform: rotateY(540deg);
     }
 }
 .social_login {
-    width: 90% !important;
+    width: 40px !important;
     height: 36px !important;
     margin-bottom: 20px;
     border: 0 !important;
@@ -37,19 +70,20 @@
 }
 
 .social_login > i.fa.fa-facebook {
-    margin-right: 10px;
     background: rgb(255, 255, 255);
     padding: 10px;
-    border-radius: 2px;
     font-size: 20px;
 }
 
 .social_login > div,
 .social_login > i.fa.fa-facebook {
-    width: 60px;
-    border-right: 1px solid #ccc;
-    height: 36px !important;
+    width: 40px;
+    height: 40px;
     color: white !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
 }
 
 .social_login > div {
@@ -64,7 +98,7 @@
 }
 
 .social_login.bg-fb {
-    border-radius: 20px;
+    border-radius: 50%;
     background-color: #4285f4 !important;
     color: white !important;
     cursor: pointer;
@@ -78,7 +112,10 @@
 }
 
 .social_login.bg-gg {
-    border-radius: 20px !important;
+    width: 40px !important;
+    height: 38px !important;
+
+    border-radius: 50% !important;
     background-color: #f58e17 !important;
     color: white !important;
     margin: 0 auto !important;

@@ -9,9 +9,9 @@ import InputLabel from '@mui/material/InputLabel';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
 import { login } from '../../../redux/actions/authAction';
 import { ValidLogin } from '../../../utils/ValidAuth';
+import SocialLogin from '../Social';
 import FormRegister from './FormRegister';
 
 const initialState = {
@@ -20,17 +20,8 @@ const initialState = {
     showPassword: false,
 };
 
-const DivStyled = styled.div`
-    margin-top: 20px;
-`;
-
-const TypographyStyled = styled(Typography)`
-    font-size: 1.5rem;
-`;
-
 const FormLogin = () => {
     const [values, setValues] = React.useState(initialState);
-    const [isLogin, setIslogin] = React.useState(true);
 
     const dispatch = useDispatch();
 
@@ -57,69 +48,62 @@ const FormLogin = () => {
     };
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <div style={{ width: '700px', marginLeft: '10px' }}>
-                <TypographyStyled variant="h3" gutterBottom component="div">
-                    {isLogin ? 'Đăng nhập' : 'Đăng ký'}
-                </TypographyStyled>
-                {isLogin ? (
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            flexWrap: 'wrap',
-                            flexDirection: 'column',
-                            width: '70%',
-                            marginLeft: '20px',
-                        }}
-                    >
-                        <TextField
-                            inputProps={{
-                                autoComplete: 'email',
-                                form: {
-                                    autoComplete: 'email',
-                                },
-                            }}
-                            id="standard-basic"
-                            value={values.username}
-                            onChange={handleChange('username')}
-                            label="Địa chỉ email"
-                            variant="standard"
-                            type="email"
-                            style={{ marginTop: '10px' }}
-                        />
-                        <FormControl sx={{ marginTop: '10px' }} variant="standard">
-                            <InputLabel htmlFor="standard-adornment-password">Mật khẩu</InputLabel>
-                            <Input
-                                id="standard-adornment-password"
-                                type={values.showPassword ? 'text' : 'password'}
-                                value={values.password}
-                                onChange={handleChange('password')}
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            aria-label="toggle password visibility"
-                                            onClick={handleClickShowPassword}
-                                            onMouseDown={handleMouseDownPassword}
-                                        >
-                                            {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                }
-                            />
-                        </FormControl>
-                        <Button variant="contained" type="submit" onClick={onSubmit} style={{ marginTop: '30px' }}>
-                            Đăng nhập
-                        </Button>
-                        <DivStyled>
-                            Bạn chưa có tài khoản{' '}
-                            <Button onClick={() => setIslogin(false)} variant="text">
-                                Đăng ký ngay?
-                            </Button>
-                        </DivStyled>
-                    </Box>
-                ) : (
-                    <FormRegister setIslogin={setIslogin} />
-                )}
+        <div className="mt-2 space-y-5">
+            <div className="relative">
+                <TextField
+                    inputProps={{
+                        autoComplete: 'email',
+                        form: {
+                            autoComplete: 'email',
+                        },
+                    }}
+                    fullWidth
+                    id="standard-basic"
+                    value={values.username}
+                    onChange={handleChange('username')}
+                    label="Địa chỉ email"
+                    variant="standard"
+                    type="email"
+                />
+            </div>
+            <div className="mt-4 content-center">
+                <FormControl fullWidth variant="standard">
+                    <InputLabel htmlFor="standard-adornment-password">Mật khẩu</InputLabel>
+                    <Input
+                        id="standard-adornment-password"
+                        type={values.showPassword ? 'text' : 'password'}
+                        value={values.password}
+                        onChange={handleChange('password')}
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                >
+                                    {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                        }
+                    />
+                </FormControl>
+            </div>
+            <div className="flex items-center justify-between pt-2">
+                <div className="flex items-center">
+                    <span className="ml-2 block text-sm text-gray-900">Nhớ mật khẩu</span>
+                </div>
+                <div className="text-sm">
+                    <span className="font-medium text-indigo-500 hover:text-indigo-500">Quên mật khẩu?</span>
+                </div>
+            </div>
+            <div>
+                <button
+                    onClick={onSubmit}
+                    className="w-full flex justify-center bg-indigo-500 text-gray-100 p-3 rounded-full tracking-wide
+                                font-semibold  focus:outline-none focus:shadow-outline hover:bg-indigo-600 shadow-lg cursor-pointer transition ease-in duration-300"
+                >
+                    Đăng nhập
+                </button>
             </div>
         </div>
     );
