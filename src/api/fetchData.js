@@ -3,7 +3,7 @@ const URL = process.env.REACT_APP_API;
 console.log('🚀 ~ file: fetchData.js ~ line 3 ~ URL', URL);
 
 export const getDataAPI = async (url, token) => {
-    const res = await axios.get('/api/' + url, {
+    const res = await axios.get(URL + '/api/' + url, {
         headers: {
             Authorization: token,
         },
@@ -12,7 +12,7 @@ export const getDataAPI = async (url, token) => {
 };
 
 export const postDataAPI = async (url, data, token) => {
-    const res = await axios.post('/api/' + url, data, {
+    const res = await axios.post(URL + '/api/' + url, data, {
         headers: {
             Authorization: token,
         },
@@ -21,7 +21,7 @@ export const postDataAPI = async (url, data, token) => {
 };
 
 export const putDataAPI = async (url, data, token) => {
-    const res = await axios.put('/api/' + url, data, {
+    const res = await axios.put(URL + '/api/' + url, data, {
         headers: {
             Authorization: token,
         },
@@ -30,7 +30,7 @@ export const putDataAPI = async (url, data, token) => {
 };
 
 export const patchDataAPI = async (url, data, token) => {
-    const res = await axios.patch('/api/' + url, data, {
+    const res = await axios.patch(URL + '/api/' + url, data, {
         headers: {
             Authorization: token,
         },
@@ -39,7 +39,7 @@ export const patchDataAPI = async (url, data, token) => {
 };
 
 export const deleteDataAPI = async (url, token) => {
-    const res = await axios.delete('/api/' + url, {
+    const res = await axios.delete(URL + '/api/' + url, {
         headers: {
             Authorization: token,
         },
