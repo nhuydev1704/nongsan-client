@@ -7,8 +7,11 @@ import FooterSidebar from '../Sidebar/FooterSidebar';
 import SearchComponent from './SearchComponent';
 import logo from './logo.png';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const LayoutComponent = ({ loading, children }) => {
+    const { auth } = useSelector((state) => state);
+
     return (
         <>
             {loading && (
@@ -30,7 +33,7 @@ const LayoutComponent = ({ loading, children }) => {
                     <FooterSidebar />
                 </div>
                 <div className="lg:pl-[19rem] md:pl-0 w-full">
-                    <SearchComponent />
+                    {auth.token && <SearchComponent />}
                     <div className="px-4 py-5 pt-[4rem]">{children}</div>
                 </div>
             </div>
