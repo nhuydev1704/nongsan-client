@@ -5,7 +5,7 @@ const Profile = () => {
     const { auth } = useSelector((state) => state);
 
     return (
-        <div className="flex items-center mt-10 mb-4 px-8">
+        <div className="flex items-center mt-10 mb-2 px-8">
             <div className="w-10 h-10 bg-cover rounded-md mr-3">
                 <img
                     src={auth?.user?.avatar}

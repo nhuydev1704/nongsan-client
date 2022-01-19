@@ -2,6 +2,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import Filter from '../components/Filter';
 import LayoutComponent from '../components/global/LayoutComponent';
 import DetailProduct from '../components/Products/DetailProduct';
 import ItemProduct from '../components/Products/ItemProduct';
@@ -15,9 +16,9 @@ const HomePage = () => {
     return (
         <LayoutComponent>
             Title
-            {/* <Filter /> */}
+            <Filter />
             <Box sx={{ flexGrow: 1 }}>
-                <Grid container spacing={3}>
+                <Grid container spacing={2}>
                     {products.products &&
                         products.products.length > 0 &&
                         products.products.map((product, index) => (

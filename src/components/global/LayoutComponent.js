@@ -17,9 +17,9 @@ const LayoutComponent = ({ loading, children }) => {
                 </Backdrop>
             )}
             <div>
-                <div className="w-80 bg-indigo-900 shadow-xl h-screen flex-col justify-between hidden lg:flex fixed">
+                <div className="w-[19rem] bg-indigo-900 shadow-xl h-screen flex-col justify-between hidden lg:flex fixed">
                     <div>
-                        <div className="h-16 w-full flex items-center px-8  mt-4">
+                        <div className="h-14 w-full flex items-center px-8 mt-4">
                             <Link to="/">
                                 <img src={logo} alt="hihi" />
                             </Link>
@@ -29,11 +29,9 @@ const LayoutComponent = ({ loading, children }) => {
                     </div>
                     <FooterSidebar />
                 </div>
-                <div className="lg:pl-80 md:pl-0 w-full">
-                    <div className="px-4 py-5">
-                        <SearchComponent />
-                        {children}
-                    </div>
+                <div className="lg:pl-[19rem] md:pl-0 w-full">
+                    <SearchComponent />
+                    <div className="px-4 py-5 pt-[4rem]">{children}</div>
                 </div>
             </div>
         </>

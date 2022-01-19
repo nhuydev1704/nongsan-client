@@ -20,7 +20,7 @@ export const getProducts = () => async (dispatch) => {
 
 export const updateProduct = (id, color) => async (dispatch) => {
     try {
-        const res = await putDataAPI(`product/${id}`, { color });
+        const res = await putDataAPI(`product/${id}`, { color: color.color, textColor: color.textColor });
         if (res.status === 200) {
             dispatch({ type: TYPES.UPDATE_PRODUCT, payload: res.data.product });
         }

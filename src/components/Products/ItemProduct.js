@@ -7,11 +7,13 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { useDispatch } from 'react-redux';
 import { updateProduct } from '../../redux/actions/productAction';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
-import { IconButton } from '@mui/material';
+import { IconButton, Tooltip } from '@mui/material';
+import { SketchPicker } from 'react-color';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 const Item = styled(Paper)(({ theme, color }) => ({
     ...theme.typography.body2,
-    padding: theme.spacing(0.4),
+    padding: theme.spacing(0),
     textAlign: 'center',
     border: 0,
     borderRadius: '0.5rem',
@@ -23,6 +25,8 @@ const Item = styled(Paper)(({ theme, color }) => ({
 }));
 
 const ItemProduct = ({ product, setOpenDraw, setDetailProduct }) => {
+    const [displayColor, setDisplayColor] = React.useState(false);
+    const [displayColorText, setDisplayColorText] = React.useState(false);
     const dispatch = useDispatch();
 
     const handleChangeColor = (id, color) => {
@@ -34,10 +38,34 @@ const ItemProduct = ({ product, setOpenDraw, setDetailProduct }) => {
         setOpenDraw(true);
     };
 
+    const handleClick = () => {
+        setDisplayColor(!displayColor);
+    };
+
+    const handleClose = () => {
+        setDisplayColor(false);
+    };
+
+    const handleChange = (color) => {
+        handleChangeColor(product._id, { color: color.hex, textColor: product.textColor });
+    };
+
+    const handleClickText = () => {
+        setDisplayColorText(!displayColorText);
+    };
+
+    const handleCloseText = () => {
+        setDisplayColorText(false);
+    };
+
+    const handleChangeText = (color) => {
+        handleChangeColor(product._id, { color: product.color, textColor: color.hex });
+    };
+
     return (
         <Item color={product.color}>
             <div
-                className="flex-shrink-0 m-6 relative overflow-hidden rounded-lg shadow-lg transition-all"
+                className="flex-shrink-0 relative overflow-hidden rounded-lg shadow-lg transition-all"
                 style={{ background: product.color }}
             >
                 <svg
@@ -61,15 +89,16 @@ const ItemProduct = ({ product, setOpenDraw, setDetailProduct }) => {
                     <div
                         className="block absolute w-48 h-48 bottom-0 left-0 -mb-24 ml-3"
                         style={{
-                            background: 'radial-gradient(black, transparent 60%)',
                             transform: 'rotate3d(0, 0, 1, 20deg) scale3d(1, 0.6, 1)',
                             opacity: 0.2,
                         }}
                     ></div>
                     <img className="relative w-40 rounded-lg" src={product.image} alt="123" />
                 </div>
-                <div className="relative text-white px-6 pb-6 mt-6">
-                    <span className="block text-base opacity-90 mb-2">{product.title}</span>
+                <div className="relative px-6 pb-6 mt-6">
+                    <span className="block text-base opacity-90 mb-2" style={{ color: product.textColor }}>
+                        {product.title}
+                    </span>
                     <div className="flex justify-between">
                         <span className="block font-semibold text-xl">
                             <Rating
@@ -79,7 +108,7 @@ const ItemProduct = ({ product, setOpenDraw, setDetailProduct }) => {
                                 value={Number((product.rating / product.numReviews).toFixed(1))}
                                 precision={0.1}
                                 size="small"
-                                emptyIcon={<StarBorderIcon fontSize="inherit" color="action" />}
+                                emptyIcon={<StarBorderIcon fontSize="inherit" style={{ color: product.textColor }} />}
                             />
                         </span>
                         <span className=" bg-white rounded-full text-orange-500 text-sm font-bold px-3 py-2 leading-none flex items-center">
@@ -88,24 +117,112 @@ const ItemProduct = ({ product, setOpenDraw, setDetailProduct }) => {
                     </div>
                 </div>
                 <div className="absolute top-2 right-2">
-                    <IconButton onClick={() => handleOpenDetail(product)} aria-label="delete">
-                        <RemoveRedEyeOutlinedIcon style={{ color: 'white' }} />
-                    </IconButton>
+                    <Tooltip arrow title="Chi tiết sản phẩm" placement="top">
+                        <IconButton onClick={() => handleOpenDetail(product)} aria-label="delete">
+                            <RemoveRedEyeOutlinedIcon style={{ color: product.textColor }} />
+                        </IconButton>
+                    </Tooltip>
+                </div>
+                <div className="absolute top-12 right-2">
+                    <Tooltip arrow title="Thêm vào giỏ hảng" placement="top">
+                        <IconButton aria-label="add-cart">
+                            <AddShoppingCartIcon style={{ color: product.textColor }} />
+                        </IconButton>
+                    </Tooltip>
                 </div>
             </div>
-            <div className="flex absolute bottom-0 right-0 bg-blue-100 z-10 p-1 px-2 rounded-tl-lg">
-                <div
-                    onClick={() => handleChangeColor(product._id, 'rgb(168 85 247)')}
-                    className="w-3 h-3 bg-purple-500 hover:opacity-70 cursor-pointer rounded-t-sm hover:scale-125 hover:transition-all"
-                />
-                <div
-                    onClick={() => handleChangeColor(product._id, 'rgb(245 158 11)')}
-                    className="w-3 h-3 bg-amber-500 mx-2 hover:opacity-70 cursor-pointer rounded-t-sm hover:scale-125 hover:transition-all"
-                />
-                <div
-                    onClick={() => handleChangeColor(product._id, 'rgb(16 185 129)')}
-                    className="w-3 h-3 bg-emerald-500 hover:opacity-70 cursor-pointer rounded-t-sm hover:scale-125 hover:transition-all"
-                />
+            <div className="flex absolute justify-between bottom-0 right-0 z-10 p-1 px-4 w-full">
+                <div>
+                    <div
+                        style={{
+                            background: '#fff',
+                            borderRadius: '4px',
+                            boxShadow: '0 0 0 1px rgba(0,0,0,.1)',
+                            display: 'inline-block',
+                            cursor: 'pointer',
+                        }}
+                        onClick={handleClickText}
+                    >
+                        <Tooltip arrow title="Màu chữ">
+                            <div
+                                style={{
+                                    width: '36px',
+                                    height: '6px',
+                                    borderRadius: '4px',
+                                    background: `${product.textColor}`,
+                                }}
+                            />
+                        </Tooltip>
+                    </div>
+                    {displayColorText ? (
+                        <div
+                            style={{
+                                position: 'absolute',
+                                zIndex: '99999999',
+                                bottom: '0',
+                                left: '0',
+                            }}
+                        >
+                            <div
+                                style={{
+                                    position: 'fixed',
+                                    top: '0px',
+                                    right: '0px',
+                                    bottom: '0px',
+                                    left: '0px',
+                                }}
+                                onClick={handleCloseText}
+                            />
+                            <SketchPicker color={product.textColor} onChange={handleChangeText} />
+                        </div>
+                    ) : null}
+                </div>
+                <div>
+                    <div
+                        style={{
+                            padding: '1px',
+                            background: '#fff',
+                            borderRadius: '4px',
+                            boxShadow: '0 0 0 1px rgba(0,0,0,.1)',
+                            display: 'inline-block',
+                            cursor: 'pointer',
+                        }}
+                        onClick={handleClick}
+                    >
+                        <Tooltip arrow title="Màu nền">
+                            <div
+                                style={{
+                                    width: '36px',
+                                    height: '6px',
+                                    borderRadius: '4px',
+                                    background: `${product.color}`,
+                                }}
+                            />
+                        </Tooltip>
+                    </div>
+                    {displayColor ? (
+                        <div
+                            style={{
+                                position: 'absolute',
+                                zIndex: '99999999',
+                                bottom: '0',
+                                right: '0',
+                            }}
+                        >
+                            <div
+                                style={{
+                                    position: 'fixed',
+                                    top: '0px',
+                                    right: '0px',
+                                    bottom: '0px',
+                                    left: '0px',
+                                }}
+                                onClick={handleClose}
+                            />
+                            <SketchPicker color={product.color} onChange={handleChange} />
+                        </div>
+                    ) : null}
+                </div>
             </div>
         </Item>
     );

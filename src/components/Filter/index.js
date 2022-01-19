@@ -1,32 +1,36 @@
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import React from 'react';
+import Select from '@mui/material/Select';
 
 const Filter = () => {
-    const [sort, setSort] = React.useState('');
+    const [age, setAge] = React.useState('');
 
-    const handleChange = async (e) => {
-        if (e.target.value === '') {
-            setSort('');
-        } else {
-            setSort(e.target.value);
-        }
+    const handleChange = (event) => {
+        setAge(event.target.value);
     };
 
     return (
-        <FormControl component="fieldset">
-            {/* <FormLabel style={{ color: '#333' }} component="legend">
-                Sắp xếp theo
-            </FormLabel> */}
-            <RadioGroup onChange={handleChange} value={sort} row aria-label="gender" name="row-radio-buttons-group">
-                <FormControlLabel value="" control={<Radio />} label="Mới nhất" />
-                <FormControlLabel value="sort=oldest" control={<Radio />} label="Cũ nhất" />
-                <FormControlLabel value="sort=-price" control={<Radio />} label="Giá: Cao-Thấp" />
-                <FormControlLabel value="sort=price" control={<Radio />} label="Giá: Thấp-Cao" />
-            </RadioGroup>
-        </FormControl>
+        <div className="flex justify-between items-center mb-8">
+            <div>Catefory</div>
+            <FormControl variant="standard" style={{ width: 240 }}>
+                <InputLabel id="demo-simple-select-label">Sắp xếp theo</InputLabel>
+                <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={age}
+                    label="Age"
+                    onChange={handleChange}
+                    style={{ borderRadius: '40px' }}
+                >
+                    <MenuItem value={10}>Ten</MenuItem>
+                    <MenuItem value={20}>Twenty</MenuItem>
+                    <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+            </FormControl>
+        </div>
     );
 };
 

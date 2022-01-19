@@ -13,8 +13,8 @@ export default function DetailProduct({ openDraw, setOpenDraw, detailProduct }) 
         <div>
             <Drawer anchor="right" open={openDraw} onClose={() => setOpenDraw(false)}>
                 <div
-                    className="flex items-center flex-col h-full p-4"
-                    style={{ width: 800, background: '#28272B', objectFit: 'cover' }}
+                    className="flex items-center flex-col h-full p-4 xs:w-0"
+                    style={{ width: 800, background: '#28272B' }}
                 >
                     <div className="w-full flex">
                         <CardActionArea>
