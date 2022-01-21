@@ -3,6 +3,7 @@ import GetNotification from '../../utils/GetNotification';
 
 export const TYPES = {
     GET_ALL_CATEGORIES: 'GET_ALL_CATEGORIES',
+    FIND_CATEGORY: 'FIND_CATEGORY',
 };
 
 export const getCategories = () => async (dispatch) => {
@@ -16,3 +17,9 @@ export const getCategories = () => async (dispatch) => {
         GetNotification(err.response.data.msg, 'error');
     }
 };
+
+export const findCategory =
+    (id, title = '') =>
+    (dispatch) => {
+        dispatch({ type: TYPES.FIND_CATEGORY, payload: { id, title } });
+    };

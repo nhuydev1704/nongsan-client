@@ -8,7 +8,7 @@ import Drawer from '@mui/material/Drawer';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { formatNumber } from '../../utils/common';
-export default function DetailProduct({ openDraw, setOpenDraw, detailProduct }) {
+export function DetailProduct({ openDraw, setOpenDraw, detailProduct }) {
     return detailProduct._id ? (
         <div>
             <Drawer anchor="right" open={openDraw} onClose={() => setOpenDraw(false)}>
@@ -22,10 +22,10 @@ export default function DetailProduct({ openDraw, setOpenDraw, detailProduct }) 
                                 <CardMedia
                                     component="img"
                                     style={{
-                                        maxHeight: '300px',
-                                        maxWidth: '300px',
-                                        height: '240px',
-                                        width: '240px',
+                                        maxHeight: '220px',
+                                        maxWidth: '220px',
+                                        height: '220px',
+                                        width: '220px',
                                     }}
                                     image={detailProduct?.image}
                                     alt="green iguana"
@@ -74,3 +74,5 @@ export default function DetailProduct({ openDraw, setOpenDraw, detailProduct }) 
         <></>
     );
 }
+
+export default React.memo(DetailProduct);

@@ -3,6 +3,7 @@ import { TYPES } from '../actions/productAction';
 const initialState = {
     result: 0,
     products: [],
+    isNav: true,
 };
 
 const productReducer = (state = initialState, action) => {
@@ -12,6 +13,7 @@ const productReducer = (state = initialState, action) => {
                 ...state,
                 result: action.payload.result,
                 products: action.payload.products,
+                isNav: action.payload.isNav,
             };
 
         case TYPES.UPDATE_PRODUCT:

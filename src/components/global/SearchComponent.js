@@ -31,7 +31,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 1, 1, 0),
+        padding: theme.spacing(0.85, 0.85, 0.85, 0),
         // vertical padding + font size from searchIcon
         marginLeft: `calc(1em + ${theme.spacing(4)})`,
         transition: theme.transitions.create('width'),
@@ -50,7 +50,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 const SearchComponent = () => {
     return (
-        <div className="bg-gradient-to-r from-blue-500 to-blue-500 shadow-md w-full h-[4rem] flex items-center fixed z-50">
+        <div className="bg-gradient-to-r from-blue-500 to-blue-500 shadow-md w-full h-[4rem] flex items-center fixed z-10">
             <Search className="shadow-lg">
                 <SearchIconWrapper>
                     <SearchIcon />

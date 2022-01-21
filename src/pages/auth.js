@@ -19,7 +19,7 @@ const AuthPage = () => {
 
     return (
         <LayoutComponent loading={loading}>
-            <div className="bg-gradient-to-r from-violet-500 to-fuchsia-500 fixed inset-0">
+            <div className="bg-gradient-to-r from-violet-500 to-fuchsia-500 fixed inset-0 z-20">
                 <div className="h-screen w-full flex items-center justify-center">
                     <div className="max-w-lg w-full space-y-5 p-10 bg-white rounded-xl z-10">
                         <div className="text-center">
