@@ -1,9 +1,9 @@
 import { getDataAPI } from '../../api/fetchData';
 import GetNotification from '../../utils/GetNotification';
-
 export const TYPES = {
     GET_ALL_CATEGORIES: 'GET_ALL_CATEGORIES',
     FIND_CATEGORY: 'FIND_CATEGORY',
+    CLEAR_SORT: 'CLEAR_SORT',
 };
 
 export const getCategories = () => async (dispatch) => {
@@ -23,3 +23,7 @@ export const findCategory =
     (dispatch) => {
         dispatch({ type: TYPES.FIND_CATEGORY, payload: { id, title } });
     };
+
+export const clearSort = (isClear) => (dispatch) => {
+    dispatch({ type: TYPES.CLEAR_SORT, payload: isClear });
+};

@@ -3,14 +3,14 @@ import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import { Skeleton } from '@mui/material';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProducts } from '../../redux/actions/productAction';
+import { clearSort } from '../../redux/actions/categoryAction';
+import { getProducts, TYPES } from '../../redux/actions/productAction';
 const people = [
-    { name: 'Tất cả' },
-    { name: 'Mới nhất' },
-    { name: 'Cũ nhất' },
-    { name: 'Bán chạy nhất' },
-    { name: 'Cao - Thấp' },
-    { name: 'Thấp - Cao' },
+    { name: 'Mới nhất', value: '' },
+    { name: 'Cũ nhất', value: 'sort=oldest' },
+    { name: 'Bán chạy nhất', value: 'sort=-sold' },
+    { name: 'Cao - Thấp', value: 'sort=-price' },
+    { name: 'Thấp - Cao', value: 'sort=price' },
 ];
 const Filter = () => {
     const { category, loading, products } = useSelector((state) => state);
@@ -23,7 +23,13 @@ const Filter = () => {
         if (childCate && products.isNav) {
             setChildCate('');
         }
-    }, [products.isNav, childCate]);
+    }, [products.isNav]);
+
+    React.useEffect(() => {
+        if (category.clearSort) {
+            setSelected(people[0]);
+        }
+    }, [category.clearSort]);
 
     return (
         <div className="flex justify-between items-center my-6">
@@ -40,8 +46,9 @@ const Filter = () => {
                                 color: childCate === item._id ? 'white' : 'rgb(120 113 108)',
                             }}
                             onClick={() => {
-                                setChildCate(item._id);
                                 dispatch(getProducts(1, '', `child_category=${item._id}`, false));
+                                dispatch({ type: TYPES.UPDATE_PAGE, payload: true });
+                                setChildCate(item._id);
                             }}
                         >
                             {item.name}
@@ -61,7 +68,14 @@ const Filter = () => {
                     ))}
             </div>
             <div style={{ width: 240 }}>
-                <Listbox value={selected} onChange={setSelected}>
+                <Listbox
+                    value={selected}
+                    onChange={(value) => {
+                        dispatch(clearSort(false));
+                        setSelected(value);
+                        dispatch(getProducts(1, '', '', false, products.params.replace('sort', value.value)));
+                    }}
+                >
                     <div className="relative">
                         <Listbox.Button className="relative w-full py-3 pl-3 pr-10 text-left rounded-full shadow-lg bg-white cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
                             <span className="block truncate pl-2 font-bold text-stone-500">{selected.name}</span>

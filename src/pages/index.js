@@ -1,22 +1,31 @@
-import { Skeleton } from '@mui/material';
+import { Button, Skeleton } from '@mui/material';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Filter from '../components/Filter';
 import LayoutComponent from '../components/global/LayoutComponent';
 import DetailProduct from '../components/Products/DetailProduct';
 import ItemProduct from '../components/Products/ItemProduct';
 import noData from '../assets/images/Nodata.gif';
+import { getProducts } from '../redux/actions/productAction';
 const HomePage = () => {
     const [openDraw, setOpenDraw] = React.useState(false);
     const [detailProduct, setDetailProduct] = React.useState({});
+    const [page, setPage] = React.useState(1);
 
-    const { products, loading, category } = useSelector((state) => state);
+    const { products, loading, category, auth } = useSelector((state) => state);
+    const dispatch = useDispatch();
+
+    React.useEffect(() => {
+        if (products.defaultPage) {
+            setPage(1);
+        }
+    }, [products.defaultPage]);
 
     return (
         <LayoutComponent>
-            <h2 className="text-3xl font-medium opacity-80 mt-4 mb-2">{category?.children?.title}</h2>
+            <h2 className="text-3xl font-medium opacity-80 mt-4 mb-2 drop-shadow-lg">{category?.children?.title}</h2>
             <Filter />
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={2}>
@@ -44,8 +53,34 @@ const HomePage = () => {
                             </Grid>
                         ))}
                 </Grid>
+                <div className="flex justify-center mt-10">
+                    {!loading &&
+                        (products.result < page * 4 || (auth?.token && !(products.products.length > 0)) ? (
+                            ''
+                        ) : (
+                            <Button
+                                variant="contained"
+                                onClick={() => {
+                                    dispatch(
+                                        getProducts(
+                                            products.params.replace(
+                                                products.params.slice(
+                                                    products.params.indexOf('limit=') + 6,
+                                                    products.params.indexOf('&')
+                                                ),
+                                                (page + 1) * 4
+                                            )
+                                        )
+                                    );
+                                    setPage(page + 1);
+                                }}
+                            >
+                                Tải thêm
+                            </Button>
+                        ))}
+                </div>
                 <div className="flex justify-center">
-                    {!(products.products.length > 0) && (
+                    {auth?.token && !(products.products.length > 0) && (
                         <div className="flex flex-col items-center">
                             <img className="h-[400px] w-[400px]" src={noData} alt="no data..." />
                             <span className="text-center text-[3rem]">Danh mục chưa có sản phẩm!</span>

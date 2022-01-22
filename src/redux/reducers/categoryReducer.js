@@ -5,6 +5,7 @@ const initialState = {
     children: {
         title: 'Trang chủ',
     },
+    clearSort: false,
 };
 
 const categoryReducer = (state = initialState, action) => {
@@ -21,8 +22,14 @@ const categoryReducer = (state = initialState, action) => {
                     ? {
                           ...[...state.category].find((category) => category._id === action.payload.id),
                           title: action.payload.title,
+                          clearSort: true,
                       }
-                    : { title: action.payload.title },
+                    : { title: action.payload.title, clearSort: true },
+            };
+        case TYPES.CLEAR_SORT:
+            return {
+                ...state,
+                clearSort: action.payload,
             };
         default:
             return state;

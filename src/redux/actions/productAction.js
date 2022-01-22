@@ -1,22 +1,44 @@
 import { getDataAPI, putDataAPI } from '../../api/fetchData';
+import { isNumber } from '../../utils/common';
 import GetNotification from '../../utils/GetNotification';
 
 export const TYPES = {
     GET_ALL_PRODUCTS: 'GET_ALL_PRODUCTS',
     UPDATE_PRODUCT: 'UPDATE_PRODUCT',
+    UPDATE_PAGE: 'UPDATE_PAGE',
 };
 
 export const getProducts =
-    (page = 1, category = '', child_category = '', isNav = true, sort = '', search = '') =>
+    (page = 1, category = '', child_category = '', isNav = false, sort = '', search = '') =>
     async (dispatch) => {
         try {
+            dispatch({ type: TYPES.UPDATE_PAGE, payload: false });
             dispatch({ type: 'LOADING', payload: true });
+            let res;
+            let params = '';
+            if (sort) {
+                params = sort;
+                res = await getDataAPI(sort);
+            } else {
+                params = !isNumber(page)
+                    ? page
+                    : `product?limit=${4}&${category}&${child_category}&sort&title[regex]=${search}`;
+                res = await getDataAPI(
+                    !isNumber(page)
+                        ? page
+                        : `product?limit=${page * 4}&${category}&${child_category}&${sort}&title[regex]=${search}`
+                );
+            }
 
-            const res = await getDataAPI(
-                `product?limit=${page * 8}&${category}&${child_category}&${sort}&title[regex]=${search}`
-            );
             if (res.status === 200) {
-                dispatch({ type: TYPES.GET_ALL_PRODUCTS, payload: { ...res.data, isNav } });
+                dispatch({
+                    type: TYPES.GET_ALL_PRODUCTS,
+                    payload: {
+                        ...res.data,
+                        isNav,
+                        params,
+                    },
+                });
             }
 
             setTimeout(() => {

@@ -3,7 +3,9 @@ import { TYPES } from '../actions/productAction';
 const initialState = {
     result: 0,
     products: [],
-    isNav: true,
+    isNav: false,
+    params: '',
+    defaultPage: false,
 };
 
 const productReducer = (state = initialState, action) => {
@@ -14,6 +16,7 @@ const productReducer = (state = initialState, action) => {
                 result: action.payload.result,
                 products: action.payload.products,
                 isNav: action.payload.isNav,
+                params: action.payload.params,
             };
 
         case TYPES.UPDATE_PRODUCT:
@@ -28,7 +31,11 @@ const productReducer = (state = initialState, action) => {
                     }),
                 ],
             };
-
+        case TYPES.UPDATE_PAGE:
+            return {
+                ...state,
+                defaultPage: action.payload,
+            };
         default:
             return state;
     }

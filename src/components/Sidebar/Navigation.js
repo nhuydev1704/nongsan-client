@@ -3,8 +3,8 @@ import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import GrassIcon from '@mui/icons-material/Grass';
 import { useDispatch, useSelector } from 'react-redux';
 import GrainIcon from '@mui/icons-material/Grain';
-import { getProducts } from '../../redux/actions/productAction';
-import { findCategory } from '../../redux/actions/categoryAction';
+import { getProducts, TYPES } from '../../redux/actions/productAction';
+import { clearSort, findCategory } from '../../redux/actions/categoryAction';
 const Navigation = () => {
     const [active, setActive] = React.useState('Home');
     const dispatch = useDispatch();
@@ -15,9 +15,11 @@ const Navigation = () => {
         <ul className="mt-8">
             <li
                 onClick={() => {
+                    dispatch(clearSort(true));
                     dispatch(getProducts(1, '', '', true));
                     dispatch(findCategory('', 'Trang chủ'));
                     setActive('Home');
+                    dispatch({ type: TYPES.UPDATE_PAGE, payload: true });
                 }}
                 className={`${
                     active === 'Home' && 'bg-indigo-700'
@@ -40,9 +42,11 @@ const Navigation = () => {
                         item.type === 'agricultural' && (
                             <li
                                 onClick={() => {
+                                    dispatch(clearSort(true));
                                     setActive(item.name);
                                     dispatch(getProducts(1, `category=${item._id}`, '', true));
                                     dispatch(findCategory(item._id, item.name));
+                                    dispatch({ type: TYPES.UPDATE_PAGE, payload: true });
                                 }}
                                 key={index}
                                 className={`${
@@ -70,9 +74,11 @@ const Navigation = () => {
                         item.type === 'other' && (
                             <li
                                 onClick={() => {
+                                    dispatch(clearSort(true));
                                     setActive(item.name);
                                     dispatch(getProducts(1, `category=${item._id}`, '', true));
                                     dispatch(findCategory(item._id, item.name));
+                                    dispatch({ type: TYPES.UPDATE_PAGE, payload: true });
                                 }}
                                 key={item._id}
                                 className={`${

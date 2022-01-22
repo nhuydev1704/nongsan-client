@@ -20,7 +20,7 @@ const LayoutComponent = ({ loading, children }) => {
                 </Backdrop>
             )}
             <div>
-                <div className="w-[19rem] bg-indigo-900 shadow-xl h-screen flex-col justify-between hidden lg:flex fixed">
+                <div className="w-[19rem] bg-indigo-900 shadow-xl h-screen flex-col justify-between hidden lg:flex fixed overflow-y-auto">
                     <div>
                         <div className="h-14 w-full flex items-center px-8 mt-4">
                             <Link to="/">
