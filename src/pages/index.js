@@ -55,7 +55,7 @@ const HomePage = () => {
                 </Grid>
                 <div className="flex justify-center mt-10">
                     {!loading &&
-                        (products.result < page * 4 || (auth?.token && !(products.products.length > 0)) ? (
+                        (products.result <= page * 8 ? (
                             ''
                         ) : (
                             <Button
@@ -68,7 +68,7 @@ const HomePage = () => {
                                                     products.params.indexOf('limit=') + 6,
                                                     products.params.indexOf('&')
                                                 ),
-                                                (page + 1) * 4
+                                                (page + 1) * 8
                                             )
                                         )
                                     );
@@ -80,7 +80,7 @@ const HomePage = () => {
                         ))}
                 </div>
                 <div className="flex justify-center">
-                    {auth?.token && !(products.products.length > 0) && (
+                    {auth?.token && !(products.products.length > 0) && !loading && (
                         <div className="flex flex-col items-center">
                             <img className="h-[400px] w-[400px]" src={noData} alt="no data..." />
                             <span className="text-center text-[3rem]">Danh mục chưa có sản phẩm!</span>

@@ -9,7 +9,7 @@ import logo from './logo.png';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-const LayoutComponent = ({ loading, children }) => {
+const LayoutComponent = ({ loading, children, title, isBack }) => {
     const { auth } = useSelector((state) => state);
 
     return (
@@ -33,7 +33,7 @@ const LayoutComponent = ({ loading, children }) => {
                     <FooterSidebar />
                 </div>
                 <div className="lg:pl-[19rem] md:pl-0 w-full">
-                    {auth.token && <SearchComponent />}
+                    {auth.token && <SearchComponent title={title} isBack={isBack} />}
                     <div className="px-4 py-5 pt-[4rem]">{children}</div>
                 </div>
             </div>

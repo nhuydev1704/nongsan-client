@@ -14,28 +14,28 @@ const FooterSidebar = () => {
     return (
         <div className="px-8 bg-indigo-800">
             <ul className="w-full flex items-center justify-between ">
-                <li className="font-medium pt-5 pb-3">
+                <li className="font-medium pt-3 pb-2">
                     <Tooltip arrow title="Thông báo">
                         <IconButton>
                             <NotificationsNoneIcon className="icon icon-tabler icon-tabler-bell text-white hover:opacity-80" />
                         </IconButton>
                     </Tooltip>
                 </li>
-                <li className="font-medium pt-5 pb-3">
+                <li className="font-medium pt-3 pb-2">
                     <Tooltip arrow title="Tư vấn">
                         <IconButton>
                             <ForumIcon className="icon icon-tabler icon-tabler-messages text-white hover:opacity-80" />
                         </IconButton>
                     </Tooltip>
                 </li>
-                <li className="font-medium pt-5 pb-3">
+                <li className="font-medium pt-3 pb-2">
                     <Tooltip arrow title="Cài đặt">
                         <IconButton>
                             <SettingsIcon className="icon icon-tabler icon-tabler-settings text-white hover:opacity-80" />
                         </IconButton>
                     </Tooltip>
                 </li>
-                <li onClick={() => dispatch(logout())} className="font-medium pt-5 pb-3 ">
+                <li onClick={() => dispatch(logout())} className="font-medium pt-3 pb-2 ">
                     <Tooltip arrow title="Đăng xuất">
                         <IconButton>
                             <LogoutIcon className="icon icon-tabler icon-tabler-archive text-white hover:opacity-80" />

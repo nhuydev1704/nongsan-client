@@ -1,18 +1,15 @@
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { Box, Button, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import IconButton from '@mui/material/IconButton';
 import Input from '@mui/material/Input';
 import InputAdornment from '@mui/material/InputAdornment';
 import InputLabel from '@mui/material/InputLabel';
-import Typography from '@mui/material/Typography';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from '../../../redux/actions/authAction';
 import { ValidLogin } from '../../../utils/ValidAuth';
-import SocialLogin from '../Social';
-import FormRegister from './FormRegister';
 
 const initialState = {
     username: '',
@@ -42,10 +39,25 @@ const FormLogin = () => {
 
     const onSubmit = async () => {
         const rs = ValidLogin(values);
+        console.log('🚀 ~ file: FormLogin.js ~ line 42 ~ onSubmit ~ values', values);
+        console.log('🚀 ~ file: FormLogin.js ~ line 42 ~ onSubmit ~ rs', rs);
         if (!rs) {
             dispatch(login(values));
         }
     };
+
+    React.useEffect(() => {
+        const listener = (event) => {
+            if (event.code === 'Enter' || event.code === 'NumpadEnter') {
+                event.preventDefault();
+                onSubmit();
+            }
+        };
+        document.addEventListener('keydown', listener);
+        return () => {
+            document.removeEventListener('keydown', listener);
+        };
+    }, [values]);
 
     return (
         <div className="mt-2 space-y-5">

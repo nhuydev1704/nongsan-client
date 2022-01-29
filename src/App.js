@@ -1,8 +1,6 @@
-import { Container } from '@mui/material';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
-import Header from './components/global/Header';
 import HomePage from './pages';
 import AuthPage from './pages/auth';
 import { refreshToken } from './redux/actions/authAction';
@@ -18,17 +16,22 @@ function App() {
     const dispatch = useDispatch();
 
     React.useEffect(() => {
+        dispatch(refreshToken());
+        if (!auth.token) return;
         dispatch(getCategories());
         dispatch(getProducts());
-        dispatch(refreshToken());
-    }, [dispatch]);
+    }, [dispatch, auth.token]);
 
     React.useEffect(() => {
+        if (auth.token) {
+            setLoadingPage(true);
+            return;
+        }
         const timeOutLoading = setTimeout(() => {
             setLoadingPage(true);
         }, 2000);
         return () => clearTimeout(timeOutLoading);
-    }, []);
+    }, [auth.token]);
 
     return (
         <>

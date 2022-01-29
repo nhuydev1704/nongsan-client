@@ -1,8 +1,9 @@
-import { getDataAPI, postDataAPI } from '../../api/fetchData';
+import { getDataAPI, patchDataAPI, postDataAPI } from '../../api/fetchData';
 import GetNotification from '../../utils/GetNotification';
 import axios from 'axios';
 export const TYPES = {
     AUTH: 'AUTH',
+    CART: 'CART',
 };
 
 export const login = (data) => async (dispatch) => {
@@ -46,7 +47,7 @@ export const register = (data) => async (dispatch) => {
 // create function logout
 export const logout = () => async (dispatch) => {
     try {
-        dispatch({ type: 'LOADING', payload: true });
+        // dispatch({ type: 'LOADING', payload: true });
         // call api logout
         const res = await postDataAPI('logout');
         // if success
@@ -54,7 +55,7 @@ export const logout = () => async (dispatch) => {
             localStorage.removeItem('firstLogin');
             window.location.href = '/';
         }
-        dispatch({ type: 'LOADING', payload: false });
+        // dispatch({ type: 'LOADING', payload: false });
     } catch (err) {
         dispatch({ type: 'LOADING', payload: false });
         GetNotification(err.response.data.msg, 'error');
@@ -75,5 +76,27 @@ export const refreshToken = () => async (dispatch) => {
             dispatch({ type: 'LOADING', payload: false });
             GetNotification(err.response.data.msg, 'error');
         }
+    }
+};
+
+export const addCart = (data) => async (dispatch) => {
+    const { loged, product, cart, token } = data;
+    if (!loged) {
+        GetNotification('Hãy đăng nhập trước khi mua sản phẩm', 'error');
+    }
+
+    const check = cart.every((item) => {
+        return item._id !== product._id;
+    });
+
+    if (check) {
+        dispatch({ type: 'CART', payload: { ...product, quantity: 1 } });
+
+        const res = await patchDataAPI('addcart', { cart: [...cart, { ...product, quantity: 1 }] }, token);
+        if (res.status === 200) {
+            GetNotification(res.data.msg, 'success');
+        }
+    } else {
+        GetNotification('Sản phẩm đã có trong giỏ hàng!', 'warning');
     }
 };

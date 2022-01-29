@@ -5,7 +5,9 @@ import IconButton from '@mui/material/IconButton';
 import InputBase from '@mui/material/InputBase';
 import { alpha, styled } from '@mui/material/styles';
 import * as React from 'react';
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -48,22 +50,42 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     },
 }));
 
-const SearchComponent = () => {
+const SearchComponent = ({ title, isBack }) => {
+    const { auth } = useSelector((state) => state);
+    const admin = auth.user.role === 'admin';
+    const navigate = useNavigate();
     return (
         <div className="bg-gradient-to-r from-blue-500 to-blue-500 shadow-md w-full h-[4rem] flex items-center fixed z-10">
-            <Search className="shadow-lg">
-                <SearchIconWrapper>
-                    <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
-            </Search>
-            <div className="ml-2">
-                <IconButton aria-label="cart">
-                    <StyledBadge badgeContent={4} color="secondary">
-                        <ShoppingCartIcon style={{ color: 'white' }} fontSize="large" />
-                    </StyledBadge>
-                </IconButton>
-            </div>
+            {isBack ? (
+                <div className="flex items-center">
+                    <IconButton onClick={() => navigate(-1)} aria-label="delete" size="large">
+                        <ArrowBackIcon style={{ color: 'white' }} />
+                    </IconButton>
+                    <span className="text-2xl text-slate-100 pb-1 ml-2">{title}</span>
+                </div>
+            ) : (
+                <>
+                    {' '}
+                    <Search className="shadow-lg">
+                        <SearchIconWrapper>
+                            <SearchIcon />
+                        </SearchIconWrapper>
+                        <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
+                    </Search>
+                    {!admin && (
+                        <Link to="/cart" className="ml-2">
+                            <IconButton aria-label="cart">
+                                <StyledBadge
+                                    badgeContent={auth.cart.length === 0 ? '0' : auth.cart.length}
+                                    color="secondary"
+                                >
+                                    <ShoppingCartIcon style={{ color: 'white' }} fontSize="large" />
+                                </StyledBadge>
+                            </IconButton>
+                        </Link>
+                    )}
+                </>
+            )}
         </div>
     );
 };

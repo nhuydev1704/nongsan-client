@@ -22,11 +22,11 @@ export const getProducts =
             } else {
                 params = !isNumber(page)
                     ? page
-                    : `product?limit=${4}&${category}&${child_category}&sort&title[regex]=${search}`;
+                    : `product?limit=${8}&${category}&${child_category}&sort&title[regex]=${search}`;
                 res = await getDataAPI(
                     !isNumber(page)
                         ? page
-                        : `product?limit=${page * 4}&${category}&${child_category}&${sort}&title[regex]=${search}`
+                        : `product?limit=${page * 8}&${category}&${child_category}&${sort}&title[regex]=${search}`
                 );
             }
 

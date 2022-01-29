@@ -5,12 +5,17 @@ import React from 'react';
 import { formatNumber } from '../../utils/common';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateProduct } from '../../redux/actions/productAction';
+import { getProducts, updateProduct } from '../../redux/actions/productAction';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import { IconButton, Skeleton, Tooltip } from '@mui/material';
 import { SketchPicker } from 'react-color';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import { Link } from 'react-router-dom';
+import { deleteDataAPI } from '../../api/fetchData';
+import GetNotification from '../../utils/GetNotification';
+import { addCart } from '../../redux/actions/authAction';
 const Item = styled(Paper)(({ theme, color }) => ({
     ...theme.typography.body2,
     padding: theme.spacing(0),
@@ -25,6 +30,9 @@ const Item = styled(Paper)(({ theme, color }) => ({
 }));
 
 const ItemProduct = ({ product, setOpenDraw, setDetailProduct }) => {
+    const { auth } = useSelector((state) => state);
+    const admin = auth?.user?.role === 'admin';
+
     const [displayColor, setDisplayColor] = React.useState(false);
     const [displayColorText, setDisplayColorText] = React.useState(false);
 
@@ -102,7 +110,11 @@ const ItemProduct = ({ product, setOpenDraw, setDetailProduct }) => {
                                 opacity: 0.2,
                             }}
                         ></div>
-                        <img className="relative w-40 rounded-lg" src={product.image} alt="123" />
+                        <img
+                            className="relative w-[10rem] h-[12rem] rounded-lg object-cover"
+                            src={product.image}
+                            alt="ảnh bị lỗi zùi"
+                        />
                     </div>
                     <div className="relative px-6 pb-8 mt-6">
                         <span className="block text-base opacity-90 mb-2" style={{ color: product.textColor }}>
@@ -129,112 +141,151 @@ const ItemProduct = ({ product, setOpenDraw, setDetailProduct }) => {
                     </div>
                     <div className="absolute top-2 right-2">
                         <Tooltip arrow title="Chi tiết sản phẩm" placement="top">
-                            <IconButton onClick={() => handleOpenDetail(product)} aria-label="delete">
+                            <IconButton onClick={() => handleOpenDetail(product)} aria-label="detail">
                                 <RemoveRedEyeOutlinedIcon style={{ color: product.textColor }} />
                             </IconButton>
                         </Tooltip>
                     </div>
-                    <div className="absolute top-12 right-2">
-                        <Tooltip arrow title="Thêm vào giỏ hảng" placement="top">
-                            <IconButton aria-label="add-cart">
-                                <AddShoppingCartIcon style={{ color: product.textColor }} />
-                            </IconButton>
-                        </Tooltip>
-                    </div>
-                </div>
-                <div className="flex absolute justify-between bottom-0 right-0 z-10 p-1 px-4 w-full">
-                    <div>
-                        <div
-                            style={{
-                                background: '#fff',
-                                borderRadius: '4px',
-                                boxShadow: '0 0 0 1px rgba(0,0,0,.1)',
-                                display: 'inline-block',
-                                cursor: 'pointer',
-                            }}
-                            onClick={handleClickText}
-                        >
-                            <Tooltip arrow title="Màu chữ">
-                                <div
-                                    style={{
-                                        width: '36px',
-                                        height: '6px',
-                                        borderRadius: '4px',
-                                        background: `${product.textColor}`,
-                                    }}
-                                />
+                    {admin && (
+                        <>
+                            <div className="absolute top-12 right-2">
+                                <Tooltip arrow title="Sửa thông tin sản phẩm" placement="top">
+                                    <IconButton aria-label="edit">
+                                        <Link to={`/product/${product._id}`}>
+                                            <EditIcon style={{ color: product.textColor }} />
+                                        </Link>
+                                    </IconButton>
+                                </Tooltip>
+                            </div>
+                            <div className="absolute top-24 right-2">
+                                <Tooltip arrow title="Xóa sản phẩm" placement="top">
+                                    <IconButton
+                                        onClick={async () => {
+                                            const res = await deleteDataAPI(`product/${product._id}`);
+                                            GetNotification(res.data.msg, 'success');
+                                            dispatch(getProducts());
+                                        }}
+                                        aria-label="delete"
+                                    >
+                                        <DeleteIcon style={{ color: product.textColor }} />
+                                    </IconButton>
+                                </Tooltip>
+                            </div>
+                        </>
+                    )}
+
+                    {!admin && (
+                        <div className="absolute top-12 right-2">
+                            <Tooltip arrow title="Thêm vào giỏ hảng" placement="top">
+                                <IconButton
+                                    onClick={() =>
+                                        dispatch(
+                                            addCart({ loged: auth?.token, product, cart: auth.cart, token: auth.token })
+                                        )
+                                    }
+                                    aria-label="add-cart"
+                                >
+                                    <AddShoppingCartIcon style={{ color: product.textColor }} />
+                                </IconButton>
                             </Tooltip>
                         </div>
-                        {displayColorText ? (
-                            <div
-                                style={{
-                                    position: 'absolute',
-                                    zIndex: '99999999',
-                                    bottom: '0',
-                                    left: '0',
-                                }}
-                            >
-                                <div
-                                    style={{
-                                        position: 'fixed',
-                                        top: '0px',
-                                        right: '0px',
-                                        bottom: '0px',
-                                        left: '0px',
-                                    }}
-                                    onClick={handleCloseText}
-                                />
-                                <SketchPicker color={product.textColor} onChange={handleChangeText} />
-                            </div>
-                        ) : null}
-                    </div>
-                    <div>
-                        <div
-                            style={{
-                                padding: '1px',
-                                background: '#fff',
-                                borderRadius: '4px',
-                                boxShadow: '0 0 0 1px rgba(0,0,0,.1)',
-                                display: 'inline-block',
-                                cursor: 'pointer',
-                            }}
-                            onClick={handleClick}
-                        >
-                            <Tooltip arrow title="Màu nền">
-                                <div
-                                    style={{
-                                        width: '36px',
-                                        height: '6px',
-                                        borderRadius: '4px',
-                                        background: `${product.color}`,
-                                    }}
-                                />
-                            </Tooltip>
-                        </div>
-                        {displayColor ? (
-                            <div
-                                style={{
-                                    position: 'absolute',
-                                    zIndex: '99999999',
-                                    bottom: '0',
-                                    right: '0',
-                                }}
-                            >
-                                <div
-                                    style={{
-                                        position: 'fixed',
-                                        top: '0px',
-                                        right: '0px',
-                                        bottom: '0px',
-                                        left: '0px',
-                                    }}
-                                    onClick={handleClose}
-                                />
-                                <SketchPicker color={product.color} onChange={handleChange} />
-                            </div>
-                        ) : null}
-                    </div>
+                    )}
                 </div>
+                {admin && (
+                    <div className="flex absolute justify-between bottom-0 right-0 z-10 p-1 px-4 w-full">
+                        <div>
+                            <div
+                                style={{
+                                    background: '#fff',
+                                    borderRadius: '4px',
+                                    boxShadow: '0 0 0 1px rgba(0,0,0,.1)',
+                                    display: 'inline-block',
+                                    cursor: 'pointer',
+                                }}
+                                onClick={handleClickText}
+                            >
+                                <Tooltip arrow title="Màu chữ">
+                                    <div
+                                        style={{
+                                            width: '36px',
+                                            height: '6px',
+                                            borderRadius: '4px',
+                                            background: `${product.textColor}`,
+                                        }}
+                                    />
+                                </Tooltip>
+                            </div>
+                            {displayColorText ? (
+                                <div
+                                    style={{
+                                        position: 'absolute',
+                                        zIndex: '99999999',
+                                        bottom: '0',
+                                        left: '0',
+                                    }}
+                                >
+                                    <div
+                                        style={{
+                                            position: 'fixed',
+                                            top: '0px',
+                                            right: '0px',
+                                            bottom: '0px',
+                                            left: '0px',
+                                        }}
+                                        onClick={handleCloseText}
+                                    />
+                                    <SketchPicker color={product.textColor} onChange={handleChangeText} />
+                                </div>
+                            ) : null}
+                        </div>
+                        <div>
+                            <div
+                                style={{
+                                    padding: '1px',
+                                    background: '#fff',
+                                    borderRadius: '4px',
+                                    boxShadow: '0 0 0 1px rgba(0,0,0,.1)',
+                                    display: 'inline-block',
+                                    cursor: 'pointer',
+                                }}
+                                onClick={handleClick}
+                            >
+                                <Tooltip arrow title="Màu nền">
+                                    <div
+                                        style={{
+                                            width: '36px',
+                                            height: '6px',
+                                            borderRadius: '4px',
+                                            background: `${product.color}`,
+                                        }}
+                                    />
+                                </Tooltip>
+                            </div>
+                            {displayColor ? (
+                                <div
+                                    style={{
+                                        position: 'absolute',
+                                        zIndex: '99999999',
+                                        bottom: '0',
+                                        right: '0',
+                                    }}
+                                >
+                                    <div
+                                        style={{
+                                            position: 'fixed',
+                                            top: '0px',
+                                            right: '0px',
+                                            bottom: '0px',
+                                            left: '0px',
+                                        }}
+                                        onClick={handleClose}
+                                    />
+                                    <SketchPicker color={product.color} onChange={handleChange} />
+                                </div>
+                            ) : null}
+                        </div>
+                    </div>
+                )}
             </Item>
         )
     );

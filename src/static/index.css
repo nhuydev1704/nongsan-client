@@ -1,5 +1,5 @@
 html {
-    font-size: 80.5% !important;
+    font-size: 88.5% !important;
 }
 
 .page_loading {
@@ -117,4 +117,9 @@ body::-webkit-scrollbar-thumb {
     color: white !important;
     margin: 0 auto !important;
     margin-bottom: 16px !important;
+}
+
+/* data grid */
+.MuiDataGrid-root .MuiDataGrid-cell:focus-within {
+    outline: none !important;
 }
