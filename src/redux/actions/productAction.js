@@ -6,6 +6,7 @@ export const TYPES = {
     GET_ALL_PRODUCTS: 'GET_ALL_PRODUCTS',
     UPDATE_PRODUCT: 'UPDATE_PRODUCT',
     UPDATE_PAGE: 'UPDATE_PAGE',
+    SEARCH_PRODUCT: 'SEARCH_PRODUCT',
 };
 
 export const getProducts =
@@ -49,6 +50,21 @@ export const getProducts =
             GetNotification(err.response.data.msg, 'error');
         }
     };
+
+export const searchProduct = (url) => async (dispatch) => {
+    try {
+        const res = await getDataAPI(url);
+        if (res.status === 200) {
+            dispatch({
+                type: TYPES.SEARCH_PRODUCT,
+                payload: res.data.products,
+            });
+        }
+    } catch (err) {
+        dispatch({ type: 'LOADING', payload: false });
+        GetNotification(err.response.data.msg, 'error');
+    }
+};
 
 export const updateProduct = (id, color) => async (dispatch) => {
     try {

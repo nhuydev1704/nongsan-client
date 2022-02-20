@@ -29,17 +29,34 @@ const FormProduct = ({ dataProduct, setDataProduct, handleSubmit, id }) => {
                 });
             }
         });
+
+        // if (!id) {
+        //     setSelected(mapCategory[0]);
+        // }
+
+        setDataCategory(mapCategory);
+    }, [category.category, id, dataProduct]);
+
+    React.useEffect(() => {
+        const mapCategory = [];
+
+        category.category.forEach((element) => {
+            mapCategory.push(element);
+
+            if (element.children) {
+                element.children.forEach((element) => {
+                    mapCategory.push(element);
+                });
+            }
+        });
         if (id) {
             if (dataProduct?.category?.parent) {
                 setSelected(dataProduct?.category?.child_category);
             } else {
                 setSelected(dataProduct?.category);
             }
-        } else {
-            setSelected(mapCategory[0]);
         }
-        setDataCategory(mapCategory);
-    }, [category.category, id, dataProduct]);
+    }, []);
 
     const handleChangeText = (e) => {
         setDataProduct({ ...dataProduct, [e.target.name]: e.target.value });
@@ -82,22 +99,39 @@ const FormProduct = ({ dataProduct, setDataProduct, handleSubmit, id }) => {
                     />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                    <NumberFormat
-                        thousandsGroupStyle="thousand"
-                        variant="standard"
-                        name="price"
-                        prefix="$"
-                        decimalSeparator="."
-                        value={dataProduct.price}
-                        onValueChange={(values) => handleChangeText({ target: { name: 'price', value: values.value } })}
-                        customInput={TextField}
-                        type="text"
-                        thousandSeparator={true}
-                        allowNegative={true}
-                        fullWidth
-                        id="standard-basic"
-                        label="Giá sản phẩm"
-                    />
+                    <div className="flex items-center">
+                        <div className="flex-auto">
+                            <NumberFormat
+                                thousandsGroupStyle="thousand"
+                                variant="standard"
+                                name="price"
+                                prefix="$"
+                                decimalSeparator="."
+                                value={dataProduct.price}
+                                onValueChange={(values) =>
+                                    handleChangeText({ target: { name: 'price', value: values.value } })
+                                }
+                                customInput={TextField}
+                                type="text"
+                                thousandSeparator={true}
+                                allowNegative={true}
+                                fullWidth
+                                id="standard-basic"
+                                label="Giá sản phẩm"
+                            />
+                        </div>
+                        <div>
+                            <TextField
+                                id="standard-basic"
+                                label=" "
+                                name="price_text"
+                                value={dataProduct.price_text}
+                                onChange={handleChangeText}
+                                variant="standard"
+                                style={{ width: '40px', marginLeft: '10px' }}
+                            />
+                        </div>
+                    </div>
                 </Grid>
                 <Grid xs={12} md={12}>
                     <label className="block ml-8 mt-5">

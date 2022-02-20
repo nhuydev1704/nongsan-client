@@ -75,7 +75,7 @@ const ItemProduct = ({ product, setOpenDraw, setDetailProduct }) => {
         product && (
             <Item color={product.color}>
                 <div
-                    className="flex-shrink-0 relative overflow-hidden rounded-lg shadow-lg"
+                    className="flex-shrink-0 relative overflow-hidden rounded-lg shadow-lg min-h-[340px]"
                     style={{ background: product.color }}
                 >
                     <svg
@@ -135,7 +135,7 @@ const ItemProduct = ({ product, setOpenDraw, setDetailProduct }) => {
                                 />
                             </span>
                             <span className=" bg-white rounded-full text-orange-500 text-sm font-bold px-3 py-2 leading-none flex items-center">
-                                ${formatNumber(product.price)}
+                                ${formatNumber(product.price) + product.price_text}
                             </span>
                         </div>
                     </div>
@@ -150,11 +150,11 @@ const ItemProduct = ({ product, setOpenDraw, setDetailProduct }) => {
                         <>
                             <div className="absolute top-12 right-2">
                                 <Tooltip arrow title="Sửa thông tin sản phẩm" placement="top">
-                                    <IconButton aria-label="edit">
-                                        <Link to={`/product/${product._id}`}>
+                                    <Link to={`/product/${product._id}`}>
+                                        <IconButton aria-label="edit">
                                             <EditIcon style={{ color: product.textColor }} />
-                                        </Link>
-                                    </IconButton>
+                                        </IconButton>
+                                    </Link>
                                 </Tooltip>
                             </div>
                             <div className="absolute top-24 right-2">

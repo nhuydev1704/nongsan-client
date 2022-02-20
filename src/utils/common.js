@@ -30,3 +30,14 @@ export const imageUpload = async (file) => {
     const data = await res.json();
     return { public_id: data.public_id, url: data.secure_url };
 };
+
+export const findPrice = (price) => {
+    // regex to find number in string
+    const regex = /\d+/g;
+    // get number from string
+    const number = price.match(regex);
+    // convert to number
+    const numberPrice = parseInt(number);
+    // return number
+    return numberPrice;
+};

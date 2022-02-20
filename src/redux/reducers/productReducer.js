@@ -36,6 +36,11 @@ const productReducer = (state = initialState, action) => {
                 ...state,
                 defaultPage: action.payload,
             };
+        case TYPES.SEARCH_PRODUCT:
+            return {
+                ...state,
+                products: action.payload,
+            };
         default:
             return state;
     }

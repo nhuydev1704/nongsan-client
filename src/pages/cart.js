@@ -15,7 +15,7 @@ const CartPage = () => {
     }, [auth.token, navigate]);
 
     return (
-        <LayoutComponent>
+        <LayoutComponent title="Giỏ hàng" isBack>
             <Cart cart={auth.cart} />
         </LayoutComponent>
     );

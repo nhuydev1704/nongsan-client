@@ -55,7 +55,7 @@ const HomePage = () => {
                 </Grid>
                 <div className="flex justify-center mt-10">
                     {!loading &&
-                        (products.result <= page * 8 ? (
+                        (products.result < page * 8 ? (
                             ''
                         ) : (
                             <Button

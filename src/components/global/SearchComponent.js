@@ -7,7 +7,10 @@ import { alpha, styled } from '@mui/material/styles';
 import * as React from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Link, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import { searchProduct } from '../../redux/actions/productAction';
+
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -50,18 +53,42 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     },
 }));
 
-const SearchComponent = ({ title, isBack }) => {
-    const { auth } = useSelector((state) => state);
+const SearchComponent = ({ title, isBack, isSearchOder, setSearch }) => {
+    const { auth, payments, products } = useSelector((state) => state);
+    const dispatch = useDispatch();
     const admin = auth.user.role === 'admin';
+
+    const handleSearchProduct = (e) => {
+        // const param = products.params.slice(0, products.params.length);
+        // console.log('🚀 ~ file: SearchComponent.js ~ line 64 ~ handleSearchProduct ~ param', param);
+
+        // return param;
+        dispatch(searchProduct(products.params + e.target.value));
+    };
+
     const navigate = useNavigate();
     return (
         <div className="bg-gradient-to-r from-blue-500 to-blue-500 shadow-md w-full h-[4rem] flex items-center fixed z-10">
             {isBack ? (
-                <div className="flex items-center">
-                    <IconButton onClick={() => navigate(-1)} aria-label="delete" size="large">
-                        <ArrowBackIcon style={{ color: 'white' }} />
-                    </IconButton>
-                    <span className="text-2xl text-slate-100 pb-1 ml-2">{title}</span>
+                <div className="flex items-center justify-between w-full">
+                    <div>
+                        <IconButton onClick={() => navigate(-1)} aria-label="delete" size="large">
+                            <ArrowBackIcon style={{ color: 'white' }} />
+                        </IconButton>
+                        <span className="text-2xl text-slate-100 pb-1 ml-2">{title}</span>
+                    </div>
+                    {isSearchOder && (
+                        <Search className="shadow-lg mr-[20rem]">
+                            <SearchIconWrapper>
+                                <SearchIcon />
+                            </SearchIconWrapper>
+                            <StyledInputBase
+                                placeholder="Nhập để tìm kiếm"
+                                onChange={(e) => setSearch(e.target.value)}
+                                inputProps={{ 'aria-label': 'search' }}
+                            />
+                        </Search>
+                    )}
                 </div>
             ) : (
                 <>
@@ -70,7 +97,11 @@ const SearchComponent = ({ title, isBack }) => {
                         <SearchIconWrapper>
                             <SearchIcon />
                         </SearchIconWrapper>
-                        <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
+                        <StyledInputBase
+                            onChange={handleSearchProduct}
+                            placeholder="Tìm kiếm sản phẩm"
+                            inputProps={{ 'aria-label': 'search' }}
+                        />
                     </Search>
                     {!admin && (
                         <Link to="/cart" className="ml-2">
@@ -84,6 +115,16 @@ const SearchComponent = ({ title, isBack }) => {
                             </IconButton>
                         </Link>
                     )}
+                    <Link to="/history" className="ml-2">
+                        <IconButton aria-label="cart">
+                            <StyledBadge
+                                badgeContent={payments.payment.length === 0 ? '0' : payments.payment.length}
+                                color="secondary"
+                            >
+                                <AccountBalanceWalletIcon style={{ color: 'white' }} fontSize="large" />
+                            </StyledBadge>
+                        </IconButton>
+                    </Link>
                 </>
             )}
         </div>

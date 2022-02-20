@@ -4,6 +4,7 @@ import axios from 'axios';
 export const TYPES = {
     AUTH: 'AUTH',
     CART: 'CART',
+    DE_CART: 'DE_CART',
 };
 
 export const login = (data) => async (dispatch) => {
@@ -90,13 +91,24 @@ export const addCart = (data) => async (dispatch) => {
     });
 
     if (check) {
-        dispatch({ type: 'CART', payload: { ...product, quantity: 1 } });
+        product
+            ? dispatch({ type: 'CART', payload: { ...product, quantity: 1 } })
+            : dispatch({ type: 'DE_CART', payload: cart });
 
-        const res = await patchDataAPI('addcart', { cart: [...cart, { ...product, quantity: 1 }] }, token);
+        const res = await patchDataAPI(
+            'addcart',
+            { cart: product ? [...cart, { ...product, quantity: 1 }] : cart },
+            token
+        );
         if (res.status === 200) {
-            GetNotification(res.data.msg, 'success');
+            product && GetNotification(res.data.msg, 'success');
         }
     } else {
         GetNotification('Sản phẩm đã có trong giỏ hàng!', 'warning');
     }
+};
+
+export const rmCart = (token) => async (dispatch) => {
+    dispatch({ type: 'DE_CART', payload: [] });
+    await patchDataAPI('addcart', { cart: [] }, token);
 };

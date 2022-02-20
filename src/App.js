@@ -5,6 +5,7 @@ import HomePage from './pages';
 import AuthPage from './pages/auth';
 import { refreshToken } from './redux/actions/authAction';
 import { getCategories } from './redux/actions/categoryAction';
+import { getPayments } from './redux/actions/paymentAction';
 import { getProducts } from './redux/actions/productAction';
 import PageRender from './routes/PageRender';
 
@@ -20,6 +21,7 @@ function App() {
         if (!auth.token) return;
         dispatch(getCategories());
         dispatch(getProducts());
+        dispatch(getPayments());
     }, [dispatch, auth.token]);
 
     React.useEffect(() => {

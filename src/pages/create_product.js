@@ -8,7 +8,7 @@ import FormProduct from '../components/Products/FormProduct';
 import ProViewProduct from '../components/Products/ProViewProduct';
 import { ValidProduct } from '../utils/ValidProduct';
 import GetNotification from '../utils/GetNotification';
-import { imageUpload } from '../utils/common';
+import { findPrice, formatNumber, imageUpload } from '../utils/common';
 import { getDataAPI, postDataAPI, putDataAPI } from '../api/fetchData';
 import { useNavigate } from 'react-router-dom';
 import { getProducts } from '../redux/actions/productAction';
@@ -24,6 +24,7 @@ const Item = styled(Paper)(({ theme }) => ({
 const initialState = {
     title: '',
     price: '',
+    price_text: '/kg',
     description: '',
     image: '',
     category: '',
@@ -41,6 +42,7 @@ const CreateProduct = ({ id }) => {
     const handleSubmit = async () => {
         setLoading(true);
         const check = ValidProduct(dataProduct);
+        console.log('🚀 ~ file: create_product.js ~ line 45 ~ handleSubmit ~ dataProduct', dataProduct);
         if (check) {
             setLoading(false);
             return GetNotification(check, 'error');
@@ -53,6 +55,7 @@ const CreateProduct = ({ id }) => {
                     category: dataProduct.category.parent ? dataProduct.category.parent : dataProduct.category._id,
                     child_category: dataProduct.category._id,
                     image: photo.url,
+                    price_text: dataProduct.price_text,
                 });
                 await GetNotification(res.data.msg, 'success');
                 dispatch(getProducts());
@@ -62,6 +65,7 @@ const CreateProduct = ({ id }) => {
                     category: dataProduct.category.parent ? dataProduct.category.parent : dataProduct.category._id,
                     child_category: dataProduct.category._id,
                     image: photo.url,
+                    price_text: dataProduct.price_text,
                 };
                 const res = await postDataAPI('product', data);
                 await GetNotification(res.data.msg, 'success');
