@@ -86,14 +86,18 @@ const Cart = ({ cart }) => {
             GetNotification('Vui lòng nhập đầy đủ thông tin', 'error');
             return;
         }
-        const res = await postDataAPI('payment', {
-            user: auth.user._id,
-            cart,
-            name: inforCustomer.name,
-            address: inforCustomer.address,
-            phone: inforCustomer.phone,
-            priceCheckout: cart.reduce((init, prev) => Number(init) + Number(prev.price * prev.quantity), [0]),
-        });
+        const res = await postDataAPI(
+            'payment',
+            {
+                user: auth.user._id,
+                cart,
+                name: inforCustomer.name,
+                address: inforCustomer.address,
+                phone: inforCustomer.phone,
+                priceCheckout: cart.reduce((init, prev) => Number(init) + Number(prev.price * prev.quantity), [0]),
+            },
+            auth.token
+        );
         if (res.status === 200) {
             dispatch(rmCart(auth.token));
             GetNotification(res.data.msg, 'success');
