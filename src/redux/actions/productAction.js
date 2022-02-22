@@ -7,6 +7,7 @@ export const TYPES = {
     UPDATE_PRODUCT: 'UPDATE_PRODUCT',
     UPDATE_PAGE: 'UPDATE_PAGE',
     SEARCH_PRODUCT: 'SEARCH_PRODUCT',
+    CHECK_SEARCH: 'CHECK_SEARCH',
 };
 
 export const getProducts =
@@ -72,6 +73,15 @@ export const updateProduct = (id, color) => async (dispatch) => {
         if (res.status === 200) {
             dispatch({ type: TYPES.UPDATE_PRODUCT, payload: res.data.product });
         }
+    } catch (err) {
+        dispatch({ type: 'LOADING', payload: false });
+        GetNotification(err.response.data.msg, 'error');
+    }
+};
+
+export const updateIsSearch = (isSearch) => async (dispatch) => {
+    try {
+        dispatch({ type: TYPES.CHECK_SEARCH, payload: isSearch });
     } catch (err) {
         dispatch({ type: 'LOADING', payload: false });
         GetNotification(err.response.data.msg, 'error');

@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getDataAPI } from '../../api/fetchData';
+import LayoutComponent from '../../components/global/LayoutComponent';
 import Posts from '../../components/Profile/Posts';
 import { getProfileUsers } from '../../redux/actions/profileAction';
 import GetNotification from '../../utils/GetNotification';
@@ -24,12 +25,9 @@ const Profile = () => {
     }, [auth.token, id, auth.user, dispatch, profile.users]);
 
     return (
-        <div>
-            {/* {userData && userData.length > 0 && (
-                <Info userData={userData} id={id} id_auth={auth.user._id} loading={loading} />
-            )} */}
-            <Posts />
-        </div>
+        <LayoutComponent title="Thông tin cá nhân" isBack>
+            profile
+        </LayoutComponent>
     );
 };
 

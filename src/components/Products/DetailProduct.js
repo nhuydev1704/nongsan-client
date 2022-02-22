@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { formatNumber } from '../../utils/common';
 export function DetailProduct({ openDraw, setOpenDraw, detailProduct }) {
+    console.log('🚀 ~ file: DetailProduct.js ~ line 12 ~ DetailProduct ~ detailProduct', detailProduct);
     return detailProduct._id ? (
         <div>
             <Drawer anchor="right" open={openDraw} onClose={() => setOpenDraw(false)}>
@@ -43,15 +44,15 @@ export function DetailProduct({ openDraw, setOpenDraw, detailProduct }) {
                                             name="simple-controlled"
                                             style={{ color: 'yellow' }}
                                             value={Number(
-                                                (detailProduct?.rating / detailProduct?.numReviews).toFixed(1)
+                                                (detailProduct?.rating / detailProduct?.numReviewers).toFixed(1)
                                             )}
-                                            precision={0.1}
+                                            precision={Number(detailProduct?.numReviewers / detailProduct?.rating)}
                                             size="medium"
                                             emptyIcon={<StarBorderIcon fontSize="inherit" color="warning" />}
                                         />
-                                        {!detailProduct?.numReviews && (
+                                        {!detailProduct?.numReviewers && (
                                             <span className="text-white ml-3 opacity-60">
-                                                ({detailProduct?.numReviews}123)
+                                                ({detailProduct?.numReviewers} đánh giá)
                                             </span>
                                         )}
                                     </div>

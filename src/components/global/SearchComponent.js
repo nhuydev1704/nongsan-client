@@ -9,7 +9,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
-import { searchProduct } from '../../redux/actions/productAction';
+import { searchProduct, updateIsSearch } from '../../redux/actions/productAction';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -60,6 +60,12 @@ const SearchComponent = ({ title, isBack, isSearchOder, setSearch }) => {
     const typingTimeoutRef = React.useRef(null);
 
     const handleSearchProduct = (e) => {
+        if (!e.target.value) {
+            dispatch(updateIsSearch(false));
+        } else {
+            dispatch(updateIsSearch(true));
+        }
+
         if (typingTimeoutRef.current) {
             clearTimeout(typingTimeoutRef.current);
         }
@@ -74,11 +80,11 @@ const SearchComponent = ({ title, isBack, isSearchOder, setSearch }) => {
         <div className="bg-gradient-to-r from-blue-500 to-blue-500 shadow-md w-full h-[4rem] flex items-center fixed z-10">
             {isBack ? (
                 <div className="flex items-center justify-between w-full">
-                    <div>
+                    <div className="flex items-center">
                         <IconButton onClick={() => navigate(-1)} aria-label="delete" size="large">
                             <ArrowBackIcon style={{ color: 'white' }} />
                         </IconButton>
-                        <span className="text-2xl text-slate-100 pb-1 ml-2">{title}</span>
+                        <span className="text-2xl text-slate-100 ml-2">{title}</span>
                     </div>
                     {isSearchOder && (
                         <Search className="shadow-lg mr-[20rem]">

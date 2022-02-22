@@ -6,6 +6,7 @@ const initialState = {
     isNav: false,
     params: '',
     defaultPage: false,
+    isSearch: false,
 };
 
 const productReducer = (state = initialState, action) => {
@@ -36,6 +37,12 @@ const productReducer = (state = initialState, action) => {
                 ...state,
                 defaultPage: action.payload,
             };
+        case TYPES.CHECK_SEARCH:
+            return {
+                ...state,
+                isSearch: action.payload,
+            };
+
         case TYPES.SEARCH_PRODUCT:
             return {
                 ...state,

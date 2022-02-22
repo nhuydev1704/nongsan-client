@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
     const { auth } = useSelector((state) => state);
@@ -15,7 +16,12 @@ const Profile = () => {
             </div>
             <div>
                 <p className="text-white text-lg font-medium">{auth?.user?.username}</p>
-                <p className="text-white font-medium text-xs">Xem thông tin</p>
+                <Link
+                    to={`/profile/${auth.user._id}`}
+                    className="text-white font-medium text-xs mt-1 hover:opacity-80 cursor-pointer"
+                >
+                    Xem thông tin
+                </Link>
             </div>
         </div>
     );

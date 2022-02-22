@@ -30,33 +30,34 @@ const FormProduct = ({ dataProduct, setDataProduct, handleSubmit, id }) => {
             }
         });
 
-        // if (!id) {
-        //     setSelected(mapCategory[0]);
-        // }
+        if (!id) {
+            setSelected(mapCategory[0]);
+        }
 
         setDataCategory(mapCategory);
     }, [category.category, id, dataProduct]);
 
     React.useEffect(() => {
-        const mapCategory = [];
-
-        category.category.forEach((element) => {
-            mapCategory.push(element);
-
-            if (element.children) {
-                element.children.forEach((element) => {
-                    mapCategory.push(element);
-                });
-            }
-        });
         if (id) {
+            const mapCategory = [];
+
+            category.category.forEach((element) => {
+                mapCategory.push(element);
+
+                if (element.children) {
+                    element.children.forEach((element) => {
+                        mapCategory.push(element);
+                    });
+                }
+            });
+            console.log('🚀 ~ file: FormProduct.js ~ line 53 ~ React.useEffect ~ id', id);
             if (dataProduct?.category?.parent) {
                 setSelected(dataProduct?.category?.child_category);
             } else {
                 setSelected(dataProduct?.category);
             }
         }
-    }, []);
+    }, [category.category, dataProduct?.category, id]);
 
     const handleChangeText = (e) => {
         setDataProduct({ ...dataProduct, [e.target.name]: e.target.value });

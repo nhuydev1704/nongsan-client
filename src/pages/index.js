@@ -15,6 +15,7 @@ const HomePage = () => {
     const [page, setPage] = React.useState(1);
 
     const { products, loading, category, auth } = useSelector((state) => state);
+    console.log('🚀 ~ file: index.js ~ line 18 ~ HomePage ~ products', products);
     const dispatch = useDispatch();
 
     React.useEffect(() => {
@@ -55,6 +56,7 @@ const HomePage = () => {
                 </Grid>
                 <div className="flex justify-center mt-10">
                     {!loading &&
+                        !products.isSearch &&
                         (products.result < page * 8 ? (
                             ''
                         ) : (
