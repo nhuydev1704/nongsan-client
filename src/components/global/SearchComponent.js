@@ -57,13 +57,16 @@ const SearchComponent = ({ title, isBack, isSearchOder, setSearch }) => {
     const { auth, payments, products } = useSelector((state) => state);
     const dispatch = useDispatch();
     const admin = auth.user.role === 'admin';
+    const typingTimeoutRef = React.useRef(null);
 
     const handleSearchProduct = (e) => {
-        // const param = products.params.slice(0, products.params.length);
-        // console.log('🚀 ~ file: SearchComponent.js ~ line 64 ~ handleSearchProduct ~ param', param);
+        if (typingTimeoutRef.current) {
+            clearTimeout(typingTimeoutRef.current);
+        }
 
-        // return param;
-        dispatch(searchProduct(products.params + e.target.value));
+        typingTimeoutRef.current = setTimeout(async () => {
+            dispatch(searchProduct(products.params + e.target.value));
+        }, 120);
     };
 
     const navigate = useNavigate();
