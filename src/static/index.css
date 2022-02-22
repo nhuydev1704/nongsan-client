@@ -123,3 +123,13 @@ body::-webkit-scrollbar-thumb {
 .MuiDataGrid-root .MuiDataGrid-cell:focus-within {
     outline: none !important;
 }
+
+/* the slides */
+.slick-slide {
+    margin: 0 10px;
+}
+
+/* the parent */
+.slick-list {
+    margin: 0 -10px;
+}

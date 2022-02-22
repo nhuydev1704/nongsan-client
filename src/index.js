@@ -7,6 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import DataProvider from './redux/store';
 import { ToastContainer } from 'react-toastify';
 import './index.css';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 ReactDOM.render(
     <React.StrictMode>
         <DataProvider>

@@ -42,7 +42,6 @@ const CreateProduct = ({ id }) => {
     const handleSubmit = async () => {
         setLoading(true);
         const check = ValidProduct(dataProduct);
-        console.log('🚀 ~ file: create_product.js ~ line 45 ~ handleSubmit ~ dataProduct', dataProduct);
         if (check) {
             setLoading(false);
             return GetNotification(check, 'error');

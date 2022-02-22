@@ -41,3 +41,28 @@ export const findPrice = (price) => {
     // return number
     return numberPrice;
 };
+
+export const checkImage = (file) => {
+    let err = '';
+    if (!file) return (err = 'Tập tin không tồn tại.');
+
+    if (file.size > 1024 * 1024) err = 'Kích cỡ vượt quá 1mb.';
+
+    return err;
+};
+
+// export const imageUpload = async (file) => {
+//     const formData = new FormData();
+
+//     formData.append('file', file);
+//     formData.append('upload_preset', 'jeeadokf');
+//     formData.append('cloud_name', 'hunre');
+
+//     const res = await fetch('https://api.cloudinary.com/v1_1/hunre/upload', {
+//         method: 'POST',
+//         body: formData,
+//     });
+
+//     const data = await res.json();
+//     return { public_id: data.public_id, url: data.secure_url };
+// };

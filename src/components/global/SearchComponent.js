@@ -60,17 +60,16 @@ const SearchComponent = ({ title, isBack, isSearchOder, setSearch }) => {
     const typingTimeoutRef = React.useRef(null);
 
     const handleSearchProduct = (e) => {
-        if (!e.target.value) {
-            dispatch(updateIsSearch(false));
-        } else {
-            dispatch(updateIsSearch(true));
-        }
-
         if (typingTimeoutRef.current) {
             clearTimeout(typingTimeoutRef.current);
         }
 
         typingTimeoutRef.current = setTimeout(async () => {
+            if (!e.target.value) {
+                dispatch(updateIsSearch(false));
+            } else {
+                dispatch(updateIsSearch(true));
+            }
             dispatch(searchProduct(products.params + e.target.value));
         }, 120);
     };

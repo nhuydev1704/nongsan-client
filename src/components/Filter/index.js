@@ -5,6 +5,7 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearSort } from '../../redux/actions/categoryAction';
 import { getProducts, TYPES } from '../../redux/actions/productAction';
+import Slider from 'react-slick';
 const people = [
     { name: 'Mới nhất', value: '' },
     { name: 'Cũ nhất', value: 'sort=oldest' },
@@ -13,7 +14,7 @@ const people = [
     { name: 'Thấp - Cao', value: 'sort=price' },
 ];
 const Filter = () => {
-    const { category, loading, products } = useSelector((state) => state);
+    const { auth, category, loading, products } = useSelector((state) => state);
     const [childCate, setChildCate] = React.useState('');
     const dispatch = useDispatch();
     const [selected, setSelected] = React.useState(people[0]);
@@ -25,6 +26,27 @@ const Filter = () => {
         }
     }, [products.isNav]);
 
+    const mapCategory = [];
+
+    category.category.forEach((element) => {
+        mapCategory.push(element);
+
+        if (element.children) {
+            element.children.forEach((element) => {
+                mapCategory.push(element);
+            });
+        }
+    });
+
+    const settings = {
+        speed: 500,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        adaptiveHeight: true,
+        autoplay: true,
+        autoplaySpeed: 4000,
+    };
+
     React.useEffect(() => {
         if (category.clearSort) {
             setSelected(people[0]);
@@ -34,6 +56,29 @@ const Filter = () => {
     return (
         <div className="flex justify-between items-center my-6">
             <div className="flex">
+                {!loading && auth.user.role === 'admin' && (
+                    <Slider {...settings} style={{ width: '58vw', marginLeft: '30px' }}>
+                        {mapCategory.map((item) => (
+                            <div
+                                className="truncate bg-white text-stone-500 font-bold py-2 px-4 rounded-full cursor-pointer min-w-[100px]  text-center mr-4 transition transform  motion-reduce:transition-none motion-reduce:transform-none"
+                                key={item._id}
+                                style={{
+                                    background: childCate === item._id ? 'rgba(59,130,246,.8)' : 'white',
+                                    color: childCate === item._id ? 'white' : 'rgb(120 113 108)',
+                                }}
+                                onClick={() => {
+                                    item?.parent
+                                        ? dispatch(getProducts(1, '', `child_category=${item._id}`, false))
+                                        : dispatch(getProducts(1, `category=${item._id}`, '', true));
+                                    dispatch({ type: TYPES.UPDATE_PAGE, payload: true });
+                                    setChildCate(item._id);
+                                }}
+                            >
+                                {item.name}
+                            </div>
+                        ))}
+                    </Slider>
+                )}
                 {!loading &&
                     category.children.children &&
                     category.children.children.length > 0 &&
@@ -73,7 +118,13 @@ const Filter = () => {
                     onChange={(value) => {
                         dispatch(clearSort(false));
                         setSelected(value);
-                        dispatch(getProducts(1, '', '', false, products.params.replace('sort', value.value)));
+                        const a = products.params.indexOf('sort');
+                        const b = products.params.indexOf('&title');
+
+                        const cut = products.params.substring(a, b);
+
+                        const stirngFinish = products.params.replace(cut, value.value);
+                        dispatch(getProducts(1, '', '', false, stirngFinish));
                     }}
                 >
                     <div className="relative">

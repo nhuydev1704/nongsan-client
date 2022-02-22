@@ -15,7 +15,6 @@ const HomePage = () => {
     const [page, setPage] = React.useState(1);
 
     const { products, loading, category, auth } = useSelector((state) => state);
-    console.log('🚀 ~ file: index.js ~ line 18 ~ HomePage ~ products', products);
     const dispatch = useDispatch();
 
     React.useEffect(() => {
