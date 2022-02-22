@@ -76,8 +76,10 @@ const CreateProduct = ({ id }) => {
         navigate('/');
     };
 
-    React.useEffect(() => {
+    React.useLayoutEffect(() => {
         if (id) {
+            console.log('dataProduct', dataProduct);
+
             (async () => {
                 const res = await getDataAPI(`product/${id}`);
                 if (res.status === 200) {

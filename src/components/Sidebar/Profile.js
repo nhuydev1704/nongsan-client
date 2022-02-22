@@ -17,7 +17,7 @@ const Profile = () => {
             <div>
                 <p className="text-white text-lg font-medium">{auth?.user?.username}</p>
                 <Link
-                    to={`/profile/${auth.user._id}`}
+                    to={`/profile/${auth?.user?._id}`}
                     className="text-white font-medium text-xs mt-1 hover:opacity-80 cursor-pointer"
                 >
                     Xem thông tin

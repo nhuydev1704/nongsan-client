@@ -12,6 +12,7 @@ import AddIcon from '@mui/icons-material/Add';
 const FormProduct = ({ dataProduct, setDataProduct, handleSubmit, id }) => {
     const [dataCategory, setDataCategory] = React.useState([]);
     const [selected, setSelected] = React.useState({});
+    const [checkUpdate, setCheckUpdate] = React.useState(false);
 
     const { category, auth } = useSelector((state) => state);
 
@@ -37,27 +38,17 @@ const FormProduct = ({ dataProduct, setDataProduct, handleSubmit, id }) => {
         setDataCategory(mapCategory);
     }, [category.category, id, dataProduct]);
 
-    React.useEffect(() => {
-        if (id) {
-            const mapCategory = [];
-
-            category.category.forEach((element) => {
-                mapCategory.push(element);
-
-                if (element.children) {
-                    element.children.forEach((element) => {
-                        mapCategory.push(element);
-                    });
-                }
-            });
-            console.log('🚀 ~ file: FormProduct.js ~ line 53 ~ React.useEffect ~ id', id);
+    React.useLayoutEffect(() => {
+        if (checkUpdate) return;
+        if (id && dataProduct?.title) {
             if (dataProduct?.category?.parent) {
                 setSelected(dataProduct?.category?.child_category);
             } else {
                 setSelected(dataProduct?.category);
             }
+            setCheckUpdate(true);
         }
-    }, [category.category, dataProduct?.category, id]);
+    }, [id, dataProduct?.category]);
 
     const handleChangeText = (e) => {
         setDataProduct({ ...dataProduct, [e.target.name]: e.target.value });
