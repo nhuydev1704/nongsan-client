@@ -19,6 +19,10 @@ import React from 'react';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import UserProfile from './UserProfile';
 import { checkImage, imageUpload } from '../../utils/common';
+import GetNotification from '../../utils/GetNotification';
+import { postDataAPI } from '../../api/fetchData';
+import { useDispatch, useSelector } from 'react-redux';
+import { refreshToken } from '../../redux/actions/authAction';
 
 const style = {
     position: 'absolute',
@@ -42,6 +46,9 @@ const initialState = {
 };
 
 const Info = ({ userData, loading }) => {
+    const { auth } = useSelector((state) => state);
+    const dispatch = useDispatch();
+
     const [open, setOpen] = React.useState(false);
     const [fileAvatar, setFileAvatar] = React.useState('');
 
@@ -49,7 +56,7 @@ const Info = ({ userData, loading }) => {
         ...initialState,
         username: userData?.username,
         address: userData?.address,
-        phone: userData?.phone,
+        phone: userData?.mobile,
         website: userData?.website,
         story: userData?.story,
         gender: userData?.gender,
@@ -64,19 +71,38 @@ const Info = ({ userData, loading }) => {
         const target = e.target;
         const files = target.files;
         setFileAvatar(files[0]);
-        // if (files) {
-        //     const file = files[0];
-        //     const check = checkImage(file);
-        //     if (check) {
-        //     }
-
-        //     const photo = await imageUpload(file);
-        //     // url = photo.url;
-        // }
     };
 
-    const handleSubmit = () => {
-        console.log('🚀 ~ file: Info.js ~ line 76 ~ handleSubmit ~ values', values);
+    const handleSubmit = async () => {
+        if (
+            !values.username ||
+            !values.address ||
+            !values.phone ||
+            !values.website ||
+            !values.story ||
+            !values.gender
+        ) {
+            GetNotification('Vui lòng nhập đầy đủ thông tin', 'error');
+            return;
+        }
+
+        if (fileAvatar) {
+            // upload file clound
+            const { url } = await imageUpload(fileAvatar);
+            const res = await postDataAPI('user', { ...values, avatar: url }, auth.token);
+            if (res?.status === 200) {
+                dispatch(refreshToken());
+                GetNotification('Cập nhật thông tin thành công', 'success');
+                setOpen(false);
+            }
+        } else {
+            const res = await postDataAPI('user', { ...values }, auth.token);
+            if (res?.status === 200) {
+                dispatch(refreshToken());
+                GetNotification('Cập nhật thông tin thành công', 'success');
+                setOpen(false);
+            }
+        }
     };
 
     return (

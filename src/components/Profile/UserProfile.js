@@ -1,5 +1,6 @@
 import { Button } from '@mui/material';
 import React from 'react';
+import phone from './phone.png';
 
 const UserProfile = ({ dataUser, setOpen }) => {
     return (
@@ -7,7 +8,7 @@ const UserProfile = ({ dataUser, setOpen }) => {
             <div className="min-w-[400px] flex items-center h-auto flex-wrap mx-auto my-32 ">
                 <div
                     id="profile"
-                    className="min-w-[460px] relative w-full rounded-2xl bg-white opacity-75 mx-6 shadow-xl"
+                    className="min-w-[480px] relative max-w-[480px] rounded-2xl bg-white opacity-75 mx-6 shadow-xl"
                 >
                     <div className="p-4 md:p-12 text-center">
                         <div
@@ -30,6 +31,10 @@ const UserProfile = ({ dataUser, setOpen }) => {
                             </svg>{' '}
                             {dataUser?.email}
                         </p>
+                        <div className="flex items-center justify-center mt-2">
+                            <img className="h-6 mr-3" src={phone} alt="email" />
+                            {dataUser?.mobile ? dataUser?.mobile : 'Số điện thoại chưa cập nhật'}
+                        </div>
                         <p className="pt-2 text-gray-600 text-xs  flex items-center justify-center">
                             <svg
                                 className="h-4 fill-current text-green-700 pr-4 mt-1"
@@ -40,7 +45,7 @@ const UserProfile = ({ dataUser, setOpen }) => {
                             </svg>{' '}
                             {dataUser?.address ? dataUser?.address : 'Địa chỉ chưa cập nhật'}
                         </p>
-                        <p className="pt-8 text-sm">
+                        <p className="pt-8 text-sm break-all">
                             {dataUser?.story ? dataUser?.story : 'Mô tả bản thân chưa cập nhật'}
                         </p>
 
@@ -50,7 +55,7 @@ const UserProfile = ({ dataUser, setOpen }) => {
                             </Button>
                         </div>
 
-                        <div className="mt-6 pb-16 w-4/5  mx-auto flex flex-wrap items-center justify-evenly">
+                        <div className="mt-6 pb-8 w-4/5  mx-auto flex flex-wrap items-center justify-evenly">
                             <a className="link" href="#" data-tippy-content="@facebook_handle">
                                 <svg
                                     className="h-6 fill-current text-gray-600 hover:text-green-700"

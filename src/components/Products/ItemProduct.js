@@ -27,6 +27,8 @@ const Item = styled(Paper)(({ theme, color }) => ({
     boxShadow: 'rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
     position: 'relative',
     transition: 'all 0.1s ease-in-out',
+    minHeight: '340px',
+    maxHeight: '340px',
 }));
 
 const ItemProduct = ({ product, setOpenDraw, setDetailProduct }) => {
@@ -75,7 +77,7 @@ const ItemProduct = ({ product, setOpenDraw, setDetailProduct }) => {
         product && (
             <Item color={product.color}>
                 <div
-                    className="flex-shrink-0 relative overflow-hidden rounded-lg shadow-lg min-h-[340px]"
+                    className="flex-shrink-0 relative overflow-hidden rounded-lg shadow-lg min-h-[340px] max-h-[340px]"
                     style={{ background: product.color }}
                 >
                     <svg
@@ -102,41 +104,43 @@ const ItemProduct = ({ product, setOpenDraw, setDetailProduct }) => {
                             fill="white"
                         />
                     </svg>
-                    <div className="relative pt-10 px-10 flex items-center justify-center">
-                        <div
-                            className="block absolute w-48 h-48 bottom-0 left-0 -mb-24 ml-3"
-                            style={{
-                                transform: 'rotate3d(0, 0, 1, 20deg) scale3d(1, 0.6, 1)',
-                                opacity: 0.2,
-                            }}
-                        ></div>
-                        <img
-                            className="relative w-[10rem] h-[12rem] rounded-lg object-cover"
-                            src={product.image}
-                            alt="ảnh bị lỗi zùi"
-                        />
-                    </div>
-                    <div className="relative px-6 pb-8 mt-6">
-                        <span className="block text-base opacity-90 mb-2" style={{ color: product.textColor }}>
-                            {product.title}
-                        </span>
-                        <div className="flex justify-between">
-                            <span className="block font-semibold text-xl">
-                                <Rating
-                                    name="simple-controlled"
-                                    style={{ color: 'yellow' }}
-                                    readOnly
-                                    value={Number((product.rating / product.numReviews).toFixed(1))}
-                                    precision={0.1}
-                                    size="small"
-                                    emptyIcon={
-                                        <StarBorderIcon fontSize="inherit" style={{ color: product.textColor }} />
-                                    }
-                                />
+                    <div className="flex flex-col justify-between h-[310px]">
+                        <div className="relative pt-10 px-10 flex items-center justify-center">
+                            <div
+                                className="block absolute w-48 h-48 bottom-0 left-0 -mb-24 ml-3"
+                                style={{
+                                    transform: 'rotate3d(0, 0, 1, 20deg) scale3d(1, 0.6, 1)',
+                                    opacity: 0.2,
+                                }}
+                            ></div>
+                            <img
+                                className="relative w-[10rem] h-[12rem] rounded-lg object-cover"
+                                src={product.image}
+                                alt="ảnh bị lỗi zùi"
+                            />
+                        </div>
+                        <div className="relative px-6 h-full mt-6 flex flex-col justify-between">
+                            <span className="block text-base opacity-90 mb-2" style={{ color: product.textColor }}>
+                                {product.title}
                             </span>
-                            <span className=" bg-white rounded-full text-orange-500 text-sm font-bold px-3 py-2 leading-none flex items-center">
-                                ${formatNumber(product.price) + product.price_text}
-                            </span>
+                            <div className="flex justify-between">
+                                <span className="block font-semibold text-xl">
+                                    <Rating
+                                        name="simple-controlled"
+                                        style={{ color: 'yellow' }}
+                                        readOnly
+                                        value={Number((product.rating / product.numReviews).toFixed(1))}
+                                        precision={0.1}
+                                        size="small"
+                                        emptyIcon={
+                                            <StarBorderIcon fontSize="inherit" style={{ color: product.textColor }} />
+                                        }
+                                    />
+                                </span>
+                                <span className="bg-white rounded-full text-orange-500 text-sm font-bold px-3 py-2 leading-none flex items-center">
+                                    ${formatNumber(product.price) + product.price_text}
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div className="absolute top-2 right-2">

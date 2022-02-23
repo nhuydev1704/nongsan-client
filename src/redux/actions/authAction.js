@@ -5,6 +5,7 @@ export const TYPES = {
     AUTH: 'AUTH',
     CART: 'CART',
     DE_CART: 'DE_CART',
+    UPDATE_USER: 'UPDATE_USER',
 };
 
 export const login = (data) => async (dispatch) => {
