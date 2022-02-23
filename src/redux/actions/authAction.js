@@ -6,6 +6,7 @@ export const TYPES = {
     CART: 'CART',
     DE_CART: 'DE_CART',
     UPDATE_USER: 'UPDATE_USER',
+    SOCKET: 'SOCKET',
 };
 
 export const login = (data) => async (dispatch) => {
@@ -112,4 +113,8 @@ export const addCart = (data) => async (dispatch) => {
 export const rmCart = (token) => async (dispatch) => {
     dispatch({ type: 'DE_CART', payload: [] });
     await patchDataAPI('addcart', { cart: [] }, token);
+};
+
+export const addSocket = (socket) => async (dispatch) => {
+    dispatch({ type: 'SOCKET', payload: socket });
 };

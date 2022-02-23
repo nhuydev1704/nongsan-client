@@ -129,12 +129,10 @@ const ItemProduct = ({ product, setOpenDraw, setDetailProduct }) => {
                                         name="simple-controlled"
                                         style={{ color: 'yellow' }}
                                         readOnly
-                                        value={Number((product.rating / product.numReviews).toFixed(1))}
+                                        value={Number((product.rating / product.numReviewers).toFixed(1))}
                                         precision={0.1}
-                                        size="small"
-                                        emptyIcon={
-                                            <StarBorderIcon fontSize="inherit" style={{ color: product.textColor }} />
-                                        }
+                                        size="medium"
+                                        emptyIcon={<StarBorderIcon fontSize="inherit" style={{ color: '#ccc' }} />}
                                     />
                                 </span>
                                 <span className="bg-white rounded-full text-orange-500 text-sm font-bold px-3 py-2 leading-none flex items-center">

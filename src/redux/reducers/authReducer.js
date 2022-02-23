@@ -13,6 +13,9 @@ const authReducer = (state = initialState, action) => {
         case TYPES.DE_CART:
             return { ...state, cart: [...action.payload] };
 
+        case TYPES.SOCKET:
+            return { ...state, socket: action.payload };
+
         default:
             return state;
     }

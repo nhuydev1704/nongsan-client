@@ -3,11 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 import HomePage from './pages';
 import AuthPage from './pages/auth';
-import { refreshToken } from './redux/actions/authAction';
+import { addSocket, refreshToken } from './redux/actions/authAction';
 import { getCategories } from './redux/actions/categoryAction';
 import { getPayments } from './redux/actions/paymentAction';
 import { getProducts } from './redux/actions/productAction';
 import PageRender from './routes/PageRender';
+import io from 'socket.io-client';
 
 function App() {
     const [loadingPage, setLoadingPage] = React.useState(false);
@@ -17,11 +18,15 @@ function App() {
     const dispatch = useDispatch();
 
     React.useEffect(() => {
+        const socket = io(`${process.env.REACT_APP_API}`);
+        dispatch(addSocket(socket));
         dispatch(refreshToken());
         if (!auth.token) return;
         dispatch(getCategories());
         dispatch(getProducts());
         dispatch(getPayments());
+
+        return () => socket.close();
     }, [dispatch, auth.token]);
 
     React.useEffect(() => {
