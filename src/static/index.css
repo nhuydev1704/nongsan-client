@@ -400,7 +400,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .slick-slider.slick-initialized {
-    width: 60vw !important;
+    width: 56vw !important;
 }
 
 [contenteditable][placeholder]:empty:before {
