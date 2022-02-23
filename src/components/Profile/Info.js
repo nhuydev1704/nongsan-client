@@ -141,7 +141,7 @@ const Info = ({ userData, loading }) => {
                         <div className="shadow-xl rounded-full p-4 ">
                             <Avatar
                                 alt={userData[0]?.username}
-                                src={fileAvatar ? URL.createObjectURL(fileAvatar) : userData[0]?.avatar}
+                                src={fileAvatar ? URL.createObjectURL(fileAvatar) : userData?.avatar}
                                 sx={{ width: 152, height: 152 }}
                             />
                         </div>
