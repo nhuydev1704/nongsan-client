@@ -7,8 +7,13 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { logout } from '../../redux/actions/authAction';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-
+import SetingAccount from '../SetingAccount';
+import Notification from '../Notification';
+import Badge from '@mui/material/Badge';
 const FooterSidebar = () => {
+    const [open, setOpen] = React.useState(false);
+    const [openDraw, setOpenDraw] = React.useState(false);
+
     const dispatch = useDispatch();
 
     return (
@@ -16,8 +21,10 @@ const FooterSidebar = () => {
             <ul className="w-full flex items-center justify-between ">
                 <li className="font-medium pt-3 pb-2">
                     <Tooltip arrow title="Thông báo">
-                        <IconButton>
-                            <NotificationsNoneIcon className="icon icon-tabler icon-tabler-bell text-white hover:opacity-80" />
+                        <IconButton onClick={() => setOpenDraw(!openDraw)}>
+                            <Badge badgeContent={4} color="secondary">
+                                <NotificationsNoneIcon className="icon icon-tabler icon-tabler-bell text-white hover:opacity-80" />
+                            </Badge>
                         </IconButton>
                     </Tooltip>
                 </li>
@@ -30,7 +37,7 @@ const FooterSidebar = () => {
                 </li>
                 <li className="font-medium pt-3 pb-2">
                     <Tooltip arrow title="Cài đặt">
-                        <IconButton>
+                        <IconButton onClick={() => setOpen(true)}>
                             <SettingsIcon className="icon icon-tabler icon-tabler-settings text-white hover:opacity-80" />
                         </IconButton>
                     </Tooltip>
@@ -43,6 +50,8 @@ const FooterSidebar = () => {
                     </Tooltip>
                 </li>
             </ul>
+            <SetingAccount open={open} setOpen={setOpen} />
+            <Notification openDraw={openDraw} setOpenDraw={setOpenDraw} />
         </div>
     );
 };

@@ -15,7 +15,6 @@ import Comment from '../Comment';
 import { getDataAPI } from '../../api/fetchData';
 export function DetailProduct({ openDraw, setOpenDraw, detailProduct }) {
     const { auth, products } = useSelector((state) => state);
-    console.log('🚀 ~ file: DetailProduct.js ~ line 18 ~ DetailProduct ~ products', products);
     const socket = auth?.socket;
     const dispatch = useDispatch();
     const navigate = useNavigate();
