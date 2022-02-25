@@ -67,8 +67,14 @@ const CreateProduct = ({ id }) => {
                     price_text: dataProduct.price_text,
                 };
                 const res = await postDataAPI('product', data);
+
                 await GetNotification(res.data.msg, 'success');
                 dispatch(getProducts());
+                postDataAPI('noti', {
+                    title: `Quản trị viên đã thêm ${dataProduct.title} vào danh sách sản phẩm`,
+                    user: auth.user._id,
+                    imgProduct: photo.url,
+                });
             }
         }
         setLoading(false);

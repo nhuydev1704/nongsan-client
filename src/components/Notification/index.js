@@ -1,7 +1,15 @@
 import Drawer from '@mui/material/Drawer';
 import * as React from 'react';
-
-const Notification = ({ openDraw, setOpenDraw }) => {
+import { getDataAPI } from '../../api/fetchData';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Divider from '@mui/material/Divider';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
+import Typography from '@mui/material/Typography';
+import moment from 'moment';
+const Notification = ({ openDraw, setOpenDraw, notifications, page, setPage }) => {
     return (
         <div>
             <Drawer anchor="right" open={openDraw} onClose={() => setOpenDraw(false)}>
@@ -10,7 +18,33 @@ const Notification = ({ openDraw, setOpenDraw }) => {
                         Thông báo
                     </div>
                     <div className="p-4 xs:w-0" style={{ width: 400, background: '#fff' }}>
-                        ihiih
+                        <List sx={{ width: '100%' }}>
+                            {notifications &&
+                                notifications.length > 0 &&
+                                notifications.map((noti, index) => (
+                                    <>
+                                        <ListItem key={noti._id} alignItems="flex-start">
+                                            <ListItemAvatar>
+                                                <Avatar
+                                                    alt="Remy Sharp"
+                                                    src={noti.imgProduct ? noti.imgProduct : noti.user.avatar}
+                                                />
+                                            </ListItemAvatar>
+                                            <ListItemText
+                                                primary={noti.title}
+                                                secondary={
+                                                    <React.Fragment>
+                                                        <div className="mt-3">
+                                                            {moment(noti.createdAt).format('hh:mm DD-MM-YYYY')}
+                                                        </div>
+                                                    </React.Fragment>
+                                                }
+                                            />
+                                        </ListItem>
+                                        <Divider variant="inset" component="li" />
+                                    </>
+                                ))}
+                        </List>
                     </div>
                 </div>
             </Drawer>

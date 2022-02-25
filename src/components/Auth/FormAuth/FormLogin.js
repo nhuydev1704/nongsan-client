@@ -39,8 +39,6 @@ const FormLogin = () => {
 
     const onSubmit = async () => {
         const rs = ValidLogin(values);
-        console.log('🚀 ~ file: FormLogin.js ~ line 42 ~ onSubmit ~ values', values);
-        console.log('🚀 ~ file: FormLogin.js ~ line 42 ~ onSubmit ~ rs', rs);
         if (!rs) {
             dispatch(login(values));
         }

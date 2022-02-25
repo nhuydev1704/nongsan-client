@@ -18,7 +18,7 @@ function App() {
     const dispatch = useDispatch();
 
     React.useEffect(() => {
-        const socket = io(`${process.env.REACT_APP_API}`);
+        const socket = io(`${process.env.REACT_APP_API}`, { transports: ['websocket'] });
         dispatch(addSocket(socket));
         dispatch(refreshToken());
         if (!auth.token) return;

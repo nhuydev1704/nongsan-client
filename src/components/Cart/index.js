@@ -102,7 +102,10 @@ const Cart = ({ cart }) => {
             dispatch(rmCart(auth.token));
             GetNotification(res.data.msg, 'success');
             dispatch(getPayments());
-
+            postDataAPI('noti', {
+                title: `${inforCustomer.name} đã đặt hàng thành công!`,
+                user: auth.user._id,
+            });
             navigate('/');
         }
     };
@@ -170,7 +173,17 @@ const Cart = ({ cart }) => {
                                     </div>
                                 ) : (
                                     <button
-                                        onClick={() => setIsBill(true)}
+                                        onClick={() => {
+                                            if (
+                                                inforCustomer.name === '' ||
+                                                inforCustomer.address === '' ||
+                                                inforCustomer.phone === ''
+                                            ) {
+                                                GetNotification('Vui lòng nhập đầy đủ thông tin', 'error');
+                                                return;
+                                            }
+                                            setIsBill(true);
+                                        }}
                                         className="h-10 w-full bg-blue-500 rounded focus:outline-none text-white hover:bg-blue-600"
                                     >
                                         Đặt hàng

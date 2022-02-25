@@ -10,11 +10,27 @@ import Tooltip from '@mui/material/Tooltip';
 import SetingAccount from '../SetingAccount';
 import Notification from '../Notification';
 import Badge from '@mui/material/Badge';
+import { getDataAPI } from '../../api/fetchData';
 const FooterSidebar = () => {
+    const [notifications, setNotifications] = React.useState([]);
+    const [page, setPage] = React.useState(1);
+
     const [open, setOpen] = React.useState(false);
     const [openDraw, setOpenDraw] = React.useState(false);
 
     const dispatch = useDispatch();
+
+    React.useEffect(() => {
+        const getNotifications = async () => {
+            const res = await getDataAPI('/noti', {
+                limit: page * 10,
+            });
+
+            setNotifications(res.data.notifications);
+        };
+
+        getNotifications();
+    }, [page]);
 
     return (
         <div className="px-8 bg-indigo-800">
@@ -22,7 +38,10 @@ const FooterSidebar = () => {
                 <li className="font-medium pt-3 pb-2">
                     <Tooltip arrow title="Thông báo">
                         <IconButton onClick={() => setOpenDraw(!openDraw)}>
-                            <Badge badgeContent={4} color="secondary">
+                            <Badge
+                                badgeContent={notifications.length === 0 ? '0' : notifications.length}
+                                color="secondary"
+                            >
                                 <NotificationsNoneIcon className="icon icon-tabler icon-tabler-bell text-white hover:opacity-80" />
                             </Badge>
                         </IconButton>
@@ -51,7 +70,13 @@ const FooterSidebar = () => {
                 </li>
             </ul>
             <SetingAccount open={open} setOpen={setOpen} />
-            <Notification openDraw={openDraw} setOpenDraw={setOpenDraw} />
+            <Notification
+                notifications={notifications}
+                setPage={setPage}
+                page={page}
+                openDraw={openDraw}
+                setOpenDraw={setOpenDraw}
+            />
         </div>
     );
 };
