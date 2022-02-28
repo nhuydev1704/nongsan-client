@@ -29,6 +29,7 @@ const initialState = {
     image: '',
     category: '',
     child_category: '',
+    discount: 0,
 };
 
 const CreateProduct = ({ id }) => {
@@ -40,6 +41,7 @@ const CreateProduct = ({ id }) => {
     const [loading, setLoading] = React.useState(false);
 
     const handleSubmit = async () => {
+        let dc = dataProduct.discount === '' ? 0 : dataProduct.discount;
         setLoading(true);
         const check = ValidProduct(dataProduct);
         if (check) {

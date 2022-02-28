@@ -41,15 +41,15 @@ function CommentItem({ comment, socket }) {
         <>
             <CommentCard comment={comment}>
                 <div className="nav_comment">
-                    <p className="mar-left text-white" onClick={() => handleReply(comment.username)}>
+                    <p className="mar-left text-gray-300" onClick={() => handleReply(comment.username)}>
                         Trả lời
                     </p>
                     {hideReplyComment > 0 && (
-                        <p className="text-white" onClick={loadMore}>
+                        <p className="text-gray-300" onClick={loadMore}>
                             Xem thêm {hideReplyComment} bình luận
                         </p>
                     )}
-                    <p className="text-white" onClick={hiddenReply}>
+                    <p className="text-gray-300" onClick={hiddenReply}>
                         Ẩn
                     </p>
                 </div>

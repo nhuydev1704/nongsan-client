@@ -9,6 +9,11 @@ import { ToastContainer } from 'react-toastify';
 import './index.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import 'moment/locale/vi'; // without this line it didn't work
+import moment from 'moment';
+
+moment.locale('vi');
+
 ReactDOM.render(
     <React.StrictMode>
         <DataProvider>

@@ -114,7 +114,8 @@ const ItemProduct = ({ product, setOpenDraw, setDetailProduct }) => {
                                 }}
                             ></div>
                             <img
-                                className="relative w-[10rem] h-[12rem] rounded-lg object-cover"
+                                onClick={() => handleOpenDetail(product)}
+                                className="relative w-[10rem] h-[12rem] rounded-lg object-cover hover:scale-110 cursor-pointer"
                                 src={product.image}
                                 alt="ảnh bị lỗi zùi"
                             />
@@ -136,11 +137,23 @@ const ItemProduct = ({ product, setOpenDraw, setDetailProduct }) => {
                                     />
                                 </span>
                                 <span className="bg-white rounded-full text-orange-500 text-sm font-bold px-3 py-2 leading-none flex items-center">
+                                    {product.discount ? (
+                                        <span className="mr-2 line-through">{formatNumber(product.price_old)}</span>
+                                    ) : (
+                                        <></>
+                                    )}
                                     ${formatNumber(product.price) + product.price_text}
                                 </span>
                             </div>
                         </div>
                     </div>
+                    {product.discount ? (
+                        <div className="absolute top-8 left-8">
+                            <span className="discount">{product.discount ? '-' + product.discount + '%' : ''}</span>
+                        </div>
+                    ) : (
+                        <></>
+                    )}
                     <div className="absolute top-2 right-2">
                         <Tooltip arrow title="Chi tiết sản phẩm" placement="top">
                             <IconButton onClick={() => handleOpenDetail(product)} aria-label="detail">

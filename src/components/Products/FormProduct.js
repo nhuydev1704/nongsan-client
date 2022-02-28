@@ -77,7 +77,7 @@ const FormProduct = ({ dataProduct, setDataProduct, handleSubmit, id }) => {
     };
 
     return (
-        <div className="mx-6 py-6">
+        <div className="mx-6 py-6 relative">
             <Grid container spacing={3}>
                 <Grid item xs={12} md={6}>
                     <TextField
@@ -205,7 +205,22 @@ const FormProduct = ({ dataProduct, setDataProduct, handleSubmit, id }) => {
                         </div>
                     </Listbox>
                 </Grid>
-                <Grid item xs={12} md={6} className="flex items-center justify-center">
+                <Grid item xs={6} md={3} className="flex items-center justify-center">
+                    <div>
+                        <TextField
+                            inputProps={{ inputmode: 'numeric', pattern: '[0-9]*' }}
+                            id="standard-basic"
+                            label="Giảm giá (Tính theo %)"
+                            name="discount"
+                            fullWidth
+                            value={dataProduct.discount}
+                            onChange={handleChangeText}
+                            variant="standard"
+                            style={{ marginBottom: '2px' }}
+                        />
+                    </div>
+                </Grid>
+                <Grid item xs={6} md={3} className="flex items-center justify-center">
                     <Button variant="contained" component="label" startIcon={<BackupIcon />}>
                         Chọn ảnh bìa
                         <input type="file" hidden onChange={handleUpfile} />
@@ -218,6 +233,9 @@ const FormProduct = ({ dataProduct, setDataProduct, handleSubmit, id }) => {
                         </Button>
                     </div>
                 </Grid>
+                <div className="absolute right-0 mt-3 top-0 text-red-600">
+                    *Nếu sản phẩm không giảm giá vui lòng để trống*
+                </div>
             </Grid>
         </div>
     );

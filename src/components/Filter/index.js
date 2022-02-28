@@ -13,6 +13,16 @@ const people = [
     { name: 'Cao - Thấp', value: 'sort=-price' },
     { name: 'Thấp - Cao', value: 'sort=price' },
 ];
+
+const settings = {
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    adaptiveHeight: true,
+    autoplay: true,
+    autoplaySpeed: 4000,
+    variableWidth: true,
+};
 const Filter = () => {
     const { auth, category, loading, products } = useSelector((state) => state);
     const [childCate, setChildCate] = React.useState('');
@@ -38,15 +48,6 @@ const Filter = () => {
         }
     });
 
-    const settings = {
-        speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        adaptiveHeight: true,
-        autoplay: true,
-        autoplaySpeed: 4000,
-    };
-
     React.useEffect(() => {
         if (category.clearSort) {
             setSelected(people[0]);
@@ -57,10 +58,10 @@ const Filter = () => {
         <div className="flex justify-between items-center my-6">
             <div className="flex">
                 {!loading && auth.user.role === 'admin' && (
-                    <Slider {...settings} style={{ width: '58vw', marginLeft: '30px' }}>
+                    <Slider {...settings} style={{ marginLeft: '30px', width: '910px' }}>
                         {mapCategory.map((item) => (
                             <div
-                                className="truncate bg-white text-stone-500 font-bold py-2 px-4 rounded-full cursor-pointer min-w-[100px]  text-center mr-4 transition transform  motion-reduce:transition-none motion-reduce:transform-none"
+                                className="truncate bg-white text-stone-500 font-bold py-2 px-4 rounded-full cursor-pointer min-w-[200px] max-w-[201px] text-center mr-4 transition transform  motion-reduce:transition-none motion-reduce:transform-none"
                                 key={item._id}
                                 style={{
                                     background: childCate === item._id ? 'rgba(59,130,246,.8)' : 'white',

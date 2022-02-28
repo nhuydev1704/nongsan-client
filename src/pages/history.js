@@ -15,6 +15,7 @@ const History = () => {
 
     const [historyOrder, setHistoryOrder] = React.useState([]);
     const [loading, setLoading] = React.useState(false);
+    const [callback, setCallback] = React.useState(false);
 
     React.useEffect(() => {
         (async () => {
@@ -34,7 +35,7 @@ const History = () => {
             });
             setLoading(false);
         })();
-    }, [auth.token, auth.role, search]);
+    }, [auth.token, auth.role, search, callback]);
 
     React.useLayoutEffect(() => {
         if (!auth.token) {
@@ -44,7 +45,13 @@ const History = () => {
 
     return (
         <LayoutComponent title="Lịch sử đặt hàng" isBack isSearchOder setSearch={setSearch}>
-            <HistoryOrder historyOrder={historyOrder} loading={loading} auth={auth} />
+            <HistoryOrder
+                historyOrder={historyOrder}
+                loading={loading}
+                auth={auth}
+                setCallback={setCallback}
+                callback={callback}
+            />
         </LayoutComponent>
     );
 };

@@ -22,7 +22,7 @@ const FooterSidebar = () => {
 
     React.useEffect(() => {
         const getNotifications = async () => {
-            const res = await getDataAPI('/noti', {
+            const res = await getDataAPI('noti', {
                 limit: page * 10,
             });
 

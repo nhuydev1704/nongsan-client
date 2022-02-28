@@ -123,15 +123,41 @@ export function DetailProduct({ openDraw, setOpenDraw, detailProduct }) {
                                                 size="medium"
                                                 emptyIcon={<StarBorderIcon fontSize="inherit" color="warning" />}
                                             />
-                                            {detailProduct?.numReviewers && (
+                                            {detailProduct?.numReviewers ? (
                                                 <span className="text-white ml-3 opacity-60">
                                                     ({detailProduct?.numReviewers} đánh giá)
                                                 </span>
+                                            ) : (
+                                                <></>
                                             )}
                                         </div>
-                                        <Typography gutterBottom variant="h5" className="text-white" component="div">
-                                            {formatNumber(detailProduct?.price)} <spa className="text-sm">Đồng</spa>
-                                        </Typography>
+                                        <div className="flex items-center">
+                                            <Typography
+                                                gutterBottom
+                                                variant="h5"
+                                                className="text-white"
+                                                component="div"
+                                            >
+                                                {formatNumber(detailProduct?.price)}{' '}
+                                                <span className="text-xl mr-3">₫</span>
+                                            </Typography>
+                                            {detailProduct?.discount ? (
+                                                <div className="flex">
+                                                    <Typography
+                                                        gutterBottom
+                                                        variant="h6"
+                                                        className="text-gray-400 line-through"
+                                                        component="div"
+                                                    >
+                                                        {formatNumber(detailProduct?.price_old)}{' '}
+                                                        <span className="text-xl mr-3">₫</span>
+                                                    </Typography>
+                                                    <div className="discount">-{detailProduct?.discount}%</div>
+                                                </div>
+                                            ) : (
+                                                <></>
+                                            )}
+                                        </div>
                                         <div className="mt-4">
                                             <Button
                                                 onClick={() => {

@@ -41,7 +41,7 @@ const AuthPage = () => {
                         {isLogin ? <FormLogin /> : <FormRegister />}
                         <p className="flex flex-col items-center justify-center mt-10 text-center text-md text-gray-500">
                             <span>
-                                {isLogin ? 'Bạn chưa có tài khoản?' : 'Bạn đã có tài khoản?'}{' '}
+                                {isLogin ? 'Bạn chưa có tài khoản?' : 'Bạn đã có tài khoản?'}
                                 <span
                                     onClick={() => setIsLogin(!isLogin)}
                                     className="text-indigo-500 hover:text-indigo-500no-underline hover:underline cursor-pointer transition ease-in duration-300"

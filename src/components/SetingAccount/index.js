@@ -109,8 +109,8 @@ const SetingAccount = ({ open, setOpen }) => {
                     <Typography id="modal-modal-title" variant="h6" component="h2" style={{ marginBottom: '10px' }}>
                         <Stack direction="row" alignItems="center" justifyContent="space-between">
                             <div>Cài đặt tài khoản</div>
-                            <IconButton aria-label="delete" size="small">
-                                <CloseIcon onClick={() => setOpen(false)} fontSize="medium" />
+                            <IconButton onClick={() => setOpen(false)} aria-label="delete" size="small">
+                                <CloseIcon fontSize="medium" />
                             </IconButton>
                         </Stack>
                     </Typography>

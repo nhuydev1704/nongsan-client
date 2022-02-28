@@ -7,12 +7,16 @@ import { styled } from '@mui/material/styles';
 import { DataGrid } from '@mui/x-data-grid';
 import moment from 'moment';
 import React from 'react';
-import { putDataAPI } from '../../api/fetchData';
+import { deleteDataAPI, putDataAPI } from '../../api/fetchData';
 import GetNotification from '../../utils/GetNotification';
 import { GRID_DEFAULT_LOCALE_TEXT } from '../../utils/LanguageDataGrid';
 import { columns } from './HistoryConfig';
 import ModalProduct from './ModalProduct';
-
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import { IconButton } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { getPayments } from '../../redux/actions/paymentAction';
 const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
     padding: theme.spacing(1),
@@ -21,9 +25,10 @@ const Item = styled(Paper)(({ theme }) => ({
     // height: '600px',
 }));
 
-const HistoryOrder = ({ historyOrder, loading, auth }) => {
+const HistoryOrder = ({ historyOrder, loading, auth, callback, setCallback }) => {
     const [open, setOpen] = React.useState(false);
     const [cart, setCart] = React.useState([]);
+    const dispatch = useDispatch();
 
     const [sortModel, setSortModel] = React.useState([
         {
@@ -115,6 +120,38 @@ const HistoryOrder = ({ historyOrder, loading, auth }) => {
                                               flex: 1,
                                               renderCell: (cellValues) => {
                                                   return <>{moment(cellValues.value).format('hh:mm YYYY-MM-DD')}</>;
+                                              },
+                                          },
+                                          {
+                                              field: '',
+                                              headerName: '',
+                                              renderCell: (cellValues) => {
+                                                  return (
+                                                      <div className="flex justify-center align-middle w-full">
+                                                          <IconButton
+                                                              onClick={
+                                                                  // delete category
+                                                                  () => {
+                                                                      deleteDataAPI('payment/' + cellValues.id)
+                                                                          .then((res) => {
+                                                                              GetNotification(res.data.msg, 'success');
+                                                                              setCallback(!callback);
+                                                                          })
+                                                                          .catch((err) => {
+                                                                              GetNotification(
+                                                                                  err.response.data.msg,
+                                                                                  'error'
+                                                                              );
+                                                                          });
+                                                                  }
+                                                              }
+                                                              aria-label="delete"
+                                                              size="large"
+                                                          >
+                                                              <DeleteIcon />
+                                                          </IconButton>
+                                                      </div>
+                                                  );
                                               },
                                           },
                                       ]

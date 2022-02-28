@@ -9,6 +9,47 @@ import DetailProduct from '../components/Products/DetailProduct';
 import ItemProduct from '../components/Products/ItemProduct';
 import noData from '../assets/images/Nodata.gif';
 import { getProducts } from '../redux/actions/productAction';
+import Slider from 'react-slick';
+import banner_sua from '../assets/images/banner_sua.jpg';
+import SliderWrapper from '../components/Products/_SlickSliderStyle.js';
+
+function SampleNextArrow(props) {
+    const { className, style, onClick } = props;
+    return <div className={className} style={{ ...style, display: 'block', right: '20px' }} onClick={onClick} />;
+}
+
+function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+        <div
+            className={className}
+            style={{ ...style, display: 'block', left: '20px', zIndex: 9999 }}
+            onClick={onClick}
+        />
+    );
+}
+
+const settings = {
+    className: 'banner_auto',
+    dots: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    adaptiveHeight: true,
+    autoplay: true,
+    autoplaySpeed: 4000,
+    infinite: true,
+    variableWidth: true,
+    appendDots: (dots) => <ul>{dots}</ul>,
+    customPaging: (i) => (
+        <div className="ft-slick__dots--custom">
+            <div className="loading" />
+        </div>
+    ),
+    pauseOnHover: false,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+};
 const HomePage = () => {
     const [openDraw, setOpenDraw] = React.useState(false);
     const [detailProduct, setDetailProduct] = React.useState({});
@@ -25,7 +66,20 @@ const HomePage = () => {
 
     return (
         <LayoutComponent>
-            <h2 className="text-3xl font-medium opacity-80 mt-4 mb-2 drop-shadow-lg">{category?.children?.title}</h2>
+            <SliderWrapper>
+                <Slider {...settings}>
+                    <div className="w-screen testimoni--wrapper cursor-pointer">
+                        <img src={banner_sua} style={{ width: 'calc(100vw - 270px)', zIndex: -1 }} alt="banner_sua" />
+                    </div>
+                    <div className="w-screen testimoni--wrapper">
+                        <img src={banner_sua} style={{ width: 'calc(100vw - 270px)', zIndex: -1 }} alt="banner_sua" />
+                    </div>
+                    <div className="w-screen testimoni--wrapper">
+                        <img src={banner_sua} style={{ width: 'calc(100vw - 270px)', zIndex: -1 }} alt="banner_sua" />
+                    </div>
+                </Slider>
+            </SliderWrapper>
+            <h2 className="text-3xl font-medium opacity-80 mt-8 mb-2 drop-shadow-lg">{category?.children?.title}</h2>
             <Filter />
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={2}>

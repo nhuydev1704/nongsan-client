@@ -11,12 +11,12 @@ function CommentCard({ children, comment, reply }) {
                 <div style={{ display: 'flex', alignItems: 'center', color: 'white' }}>
                     <Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />
                     <h3 className="text-white ml-2 mr-1">{comment.username}</h3>
-                    <div className="flex items-center justify-between">
-                        <span className="text-white">{moment(comment.createdAt).fromNow()}</span>
+                    <div className="flex items-center justify-evenly">
+                        <span className="text-white text-sm">{moment(comment.createdAt).fromNow()}</span>
                         {comment.rating !== 0 && (
                             <Rating
                                 name="simple-controlled"
-                                style={{ color: 'yellow', paddingTop: '20px', position: 'absolute', right: 0 }}
+                                style={{ color: 'yellow', paddingTop: '20px', position: 'absolute', right: 40 }}
                                 value={comment.rating}
                                 precision={0.1}
                                 readOnly
@@ -29,7 +29,7 @@ function CommentCard({ children, comment, reply }) {
             </div>
 
             <p
-                className="mar-left text-white"
+                className="mar-left text-[.900rem] text-white mb-2"
                 style={{ textTransform: 'capitalize', color: 'white !important' }}
                 dangerouslySetInnerHTML={{ __html: comment.content }}
             ></p>

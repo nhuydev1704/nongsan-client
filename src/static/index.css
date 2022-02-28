@@ -131,8 +131,17 @@ body::-webkit-scrollbar-thumb {
 
 /* the parent */
 .slick-list {
-    border-radius: 8px;
-    margin: 0 -10px;
+    /* margin: 0 -10px; */
+}
+
+.banner_auto {
+    /* width: 100%; */
+    margin-bottom: 36px;
+    /* margin-left: -24px; */
+}
+
+.banner_auto > .slick-list {
+    padding: 0 !important;
 }
 
 .detail {
@@ -328,9 +337,9 @@ body::-webkit-scrollbar-thumb {
     cursor: pointer;
 }
 
-.comment_card span {
+/* .comment_card span {
     margin-right: 10px;
-}
+} */
 
 .comment_card p {
     line-height: 1.5;
@@ -399,9 +408,9 @@ body::-webkit-scrollbar-thumb {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
 }
 
-.slick-slider.slick-initialized {
-    width: 56vw !important;
-}
+/* .slick-slider.slick-initialized {
+    width: 51.8vw !important;
+} */
 
 [contenteditable][placeholder]:empty:before {
     content: attr(placeholder);
@@ -445,4 +454,18 @@ body::-webkit-scrollbar-thumb {
     top: 6%;
     left: 0;
     border-radius: 50%;
+}
+
+.discount {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 12px;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 3px;
+    background: #de2000;
+    width: 32px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
 }

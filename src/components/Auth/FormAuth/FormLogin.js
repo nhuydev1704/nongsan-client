@@ -10,7 +10,9 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from '../../../redux/actions/authAction';
 import { ValidLogin } from '../../../utils/ValidAuth';
+import Checkbox from '@mui/material/Checkbox';
 
+const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 const initialState = {
     username: '',
     password: '',
@@ -100,10 +102,15 @@ const FormLogin = () => {
             </div>
             <div className="flex items-center justify-between pt-2">
                 <div className="flex items-center">
-                    <span className="ml-2 block text-sm text-gray-900">Nhớ mật khẩu</span>
+                    <span className="flex items-center ml-2 text-sm text-gray-900">
+                        <Checkbox {...label} defaultChecked />
+                        Nhớ mật khẩu
+                    </span>
                 </div>
                 <div className="text-sm">
-                    <span className="font-medium text-indigo-500 hover:text-indigo-500">Quên mật khẩu?</span>
+                    <span className="font-medium text-indigo-500 hover:text-indigo-500 mr-4 cursor-pointer">
+                        Quên mật khẩu?
+                    </span>
                 </div>
             </div>
             <div>

@@ -22,8 +22,8 @@ const Notification = ({ openDraw, setOpenDraw, notifications, page, setPage }) =
                             {notifications &&
                                 notifications.length > 0 &&
                                 notifications.map((noti, index) => (
-                                    <>
-                                        <ListItem key={noti._id} alignItems="flex-start">
+                                    <div key={index}>
+                                        <ListItem alignItems="flex-start">
                                             <ListItemAvatar>
                                                 <Avatar
                                                     alt="Remy Sharp"
@@ -42,7 +42,7 @@ const Notification = ({ openDraw, setOpenDraw, notifications, page, setPage }) =
                                             />
                                         </ListItem>
                                         <Divider variant="inset" component="li" />
-                                    </>
+                                    </div>
                                 ))}
                         </List>
                     </div>
