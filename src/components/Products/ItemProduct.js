@@ -138,11 +138,11 @@ const ItemProduct = ({ product, setOpenDraw, setDetailProduct }) => {
                                 </span>
                                 <span className="bg-white rounded-full text-orange-500 text-sm font-bold px-3 py-2 leading-none flex items-center">
                                     {product.discount ? (
-                                        <span className="mr-2 line-through">{formatNumber(product.price_old)}</span>
+                                        <span className="mr-2 line-through">{formatNumber(product?.price_old)}</span>
                                     ) : (
                                         <></>
                                     )}
-                                    ${formatNumber(product.price) + product.price_text}
+                                    ${formatNumber(product?.price) + product.price_text}
                                 </span>
                             </div>
                         </div>

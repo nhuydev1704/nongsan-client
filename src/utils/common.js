@@ -8,7 +8,7 @@ export const validateEmail = (email) => {
 
 // create function format number
 export const formatNumber = (number) => {
-    return number.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+    return number?.toString()?.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
 };
 
 export function isNumber(num) {

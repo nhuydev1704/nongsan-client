@@ -74,8 +74,9 @@ export const updateProduct = (id, color) => async (dispatch) => {
             dispatch({ type: TYPES.UPDATE_PRODUCT, payload: res.data.product });
         }
     } catch (err) {
+        console.log('🚀 ~ file: productAction.js ~ line 77 ~ updateProduct ~ err', err?.response);
         dispatch({ type: 'LOADING', payload: false });
-        GetNotification(err.response.data.msg, 'error');
+        GetNotification(err?.response?.data?.msg, 'error');
     }
 };
 
