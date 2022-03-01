@@ -48,6 +48,20 @@ const productReducer = (state = initialState, action) => {
                 ...state,
                 products: action.payload,
             };
+
+        case TYPES.FIND_PRODUCT_DISCOUNT:
+            return {
+                ...state,
+                products: [
+                    ...state.products.filter(
+                        // filter product by category in action.payload
+                        (product) =>
+                            (product?.child_category?._id === action.payload ||
+                                product?.category?._id === action.payload) &&
+                            product?.discount
+                    ),
+                ],
+            };
         default:
             return state;
     }

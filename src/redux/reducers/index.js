@@ -5,6 +5,7 @@ import profile from './profileReducer';
 import category from './categoryReducer';
 import products from './productReducer';
 import payments from './paymentReducer';
+import banners from './bannerReducer';
 
 export default combineReducers({
     auth,
@@ -13,4 +14,5 @@ export default combineReducers({
     category,
     products,
     payments,
+    banners,
 });

@@ -2,6 +2,8 @@ import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import CategoryIcon from '@mui/icons-material/Category';
+import ViewCarouselIcon from '@mui/icons-material/ViewCarousel';
+
 const NavAdmin = ({ active, setActive }) => {
     const { page } = useParams();
 
@@ -34,6 +36,18 @@ const NavAdmin = ({ active, setActive }) => {
                     <div className="flex items-center">
                         <CategoryIcon />
                         <span className="text-sm ml-4">Danh mục sản phẩm</span>
+                    </div>
+                </li>
+            </Link>
+            <Link onClick={() => setActive('banner')} to="/banner" className="flex items-center">
+                <li
+                    className={`${
+                        active === 'banner' && 'bg-indigo-700'
+                    } flex w-full justify-between transition-all text-white font-medium hover:text-gray-300  cursor-pointer items-center px-8 py-3 my-[0.40rem]`}
+                >
+                    <div className="flex items-center">
+                        <ViewCarouselIcon />
+                        <span className="text-sm ml-4">Banner hệ thống</span>
                     </div>
                 </li>
             </Link>

@@ -9,6 +9,7 @@ import { getPayments } from './redux/actions/paymentAction';
 import { getProducts } from './redux/actions/productAction';
 import PageRender from './routes/PageRender';
 import io from 'socket.io-client';
+import { getBanners } from './redux/actions/bannerAction';
 
 function App() {
     const [loadingPage, setLoadingPage] = React.useState(false);
@@ -23,6 +24,7 @@ function App() {
         dispatch(refreshToken());
         if (!auth.token) return;
         dispatch(getCategories());
+        dispatch(getBanners());
         dispatch(getProducts());
         dispatch(getPayments());
 

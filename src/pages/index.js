@@ -1,18 +1,23 @@
-import { Button, Skeleton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import { Button, IconButton, Skeleton, Tooltip } from '@mui/material';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import Slider from 'react-slick';
+import { deleteDataAPI } from '../api/fetchData';
+import noData from '../assets/images/Nodata.gif';
 import Filter from '../components/Filter';
 import LayoutComponent from '../components/global/LayoutComponent';
+import Breadcrumb from '../components/Products/Breadcrumb';
 import DetailProduct from '../components/Products/DetailProduct';
 import ItemProduct from '../components/Products/ItemProduct';
-import noData from '../assets/images/Nodata.gif';
-import { getProducts } from '../redux/actions/productAction';
-import Slider from 'react-slick';
-import banner_sua from '../assets/images/banner_sua.jpg';
 import SliderWrapper from '../components/Products/_SlickSliderStyle.js';
-
+import { getBanners, updateBanner } from '../redux/actions/bannerAction';
+import { findProductDiscount, getProducts } from '../redux/actions/productAction';
+import GetNotification from '../utils/GetNotification';
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return <div className={className} style={{ ...style, display: 'block', right: '20px' }} onClick={onClick} />;
@@ -55,7 +60,8 @@ const HomePage = () => {
     const [detailProduct, setDetailProduct] = React.useState({});
     const [page, setPage] = React.useState(1);
 
-    const { products, loading, category, auth } = useSelector((state) => state);
+    const { products, loading, category, auth, banners } = useSelector((state) => state);
+    const admin = auth?.user?.role === 'admin';
     const dispatch = useDispatch();
 
     React.useEffect(() => {
@@ -68,18 +74,64 @@ const HomePage = () => {
         <LayoutComponent>
             <SliderWrapper>
                 <Slider {...settings}>
-                    <div className="w-screen testimoni--wrapper cursor-pointer">
-                        <img src={banner_sua} style={{ width: 'calc(100vw - 270px)', zIndex: -1 }} alt="banner_sua" />
-                    </div>
-                    <div className="w-screen testimoni--wrapper">
-                        <img src={banner_sua} style={{ width: 'calc(100vw - 270px)', zIndex: -1 }} alt="banner_sua" />
-                    </div>
-                    <div className="w-screen testimoni--wrapper">
-                        <img src={banner_sua} style={{ width: 'calc(100vw - 270px)', zIndex: -1 }} alt="banner_sua" />
-                    </div>
+                    {banners.banner &&
+                        banners.banner.length > 0 &&
+                        banners.banner.map((item, index) => (
+                            <div
+                                key={item._id}
+                                onClick={() => {
+                                    dispatch(findProductDiscount(item.category));
+                                    dispatch(updateBanner(item.title));
+                                }}
+                                className="w-screen testimoni--wrapper cursor-pointer max-h-[320px] relative"
+                            >
+                                <img
+                                    src={item.image}
+                                    style={{ width: 'calc(100vw - 270px)', maxHeight: '320px', zIndex: -1 }}
+                                    alt="banner_sua"
+                                />
+                                {admin && (
+                                    <>
+                                        <div className="absolute top-4 z-50-">
+                                            <Tooltip arrow title="Sửa thông tin banner" placement="top">
+                                                <Link to={`/banner/${item._id}`}>
+                                                    <IconButton aria-label="edit">
+                                                        <EditIcon style={{ fontSize: '36px' }} />
+                                                    </IconButton>
+                                                </Link>
+                                            </Tooltip>
+                                        </div>
+                                        <div className="absolute top-20 z-50">
+                                            <Tooltip arrow title="Xóa banner" placement="top">
+                                                <IconButton
+                                                    onClick={async () => {
+                                                        const res = await deleteDataAPI(`banner/${item._id}`);
+                                                        GetNotification(res.data.msg, 'success');
+                                                        dispatch(getBanners());
+                                                    }}
+                                                    aria-label="delete"
+                                                >
+                                                    <DeleteIcon style={{ fontSize: '36px' }} />
+                                                </IconButton>
+                                            </Tooltip>
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+                        ))}
                 </Slider>
             </SliderWrapper>
-            <h2 className="text-3xl font-medium opacity-80 mt-8 mb-2 drop-shadow-lg">{category?.children?.title}</h2>
+            {
+                <>
+                    {banners.title ? (
+                        <Breadcrumb title={banners.title} />
+                    ) : (
+                        <h2 className="text-3xl font-medium opacity-80 mt-8 mb-2 drop-shadow-lg">
+                            {category?.children?.title}
+                        </h2>
+                    )}
+                </>
+            }
             <Filter />
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={2}>
@@ -108,8 +160,12 @@ const HomePage = () => {
                         ))}
                 </Grid>
                 <div className="flex justify-center mt-10">
-                    {!loading &&
+                    {products.products.length < 8 ? (
+                        <></>
+                    ) : (
+                        !loading &&
                         !products.isSearch &&
+                        products.products.length > 0 &&
                         (products.result < page * 8 ? (
                             ''
                         ) : (
@@ -132,7 +188,8 @@ const HomePage = () => {
                             >
                                 Tải thêm
                             </Button>
-                        ))}
+                        ))
+                    )}
                 </div>
                 <div className="flex justify-center">
                     {auth?.token && !(products.products.length > 0) && !loading && (

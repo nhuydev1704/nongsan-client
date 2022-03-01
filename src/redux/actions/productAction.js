@@ -8,6 +8,7 @@ export const TYPES = {
     UPDATE_PAGE: 'UPDATE_PAGE',
     SEARCH_PRODUCT: 'SEARCH_PRODUCT',
     CHECK_SEARCH: 'CHECK_SEARCH',
+    FIND_PRODUCT_DISCOUNT: 'FIND_PRODUCT_DISCOUNT',
 };
 
 export const getProducts =
@@ -85,6 +86,14 @@ export const updateIsSearch = (isSearch) => async (dispatch) => {
         dispatch({ type: TYPES.CHECK_SEARCH, payload: isSearch });
     } catch (err) {
         dispatch({ type: 'LOADING', payload: false });
+        GetNotification(err.response.data.msg, 'error');
+    }
+};
+
+export const findProductDiscount = (id) => async (dispatch) => {
+    try {
+        dispatch({ type: TYPES.FIND_PRODUCT_DISCOUNT, payload: id });
+    } catch (err) {
         GetNotification(err.response.data.msg, 'error');
     }
 };
