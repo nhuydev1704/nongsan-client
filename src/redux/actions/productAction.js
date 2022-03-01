@@ -4,6 +4,7 @@ import GetNotification from '../../utils/GetNotification';
 
 export const TYPES = {
     GET_ALL_PRODUCTS: 'GET_ALL_PRODUCTS',
+    GET_FULL_PRODUCTS: 'GET_FULL_PRODUCTS',
     UPDATE_PRODUCT: 'UPDATE_PRODUCT',
     UPDATE_PAGE: 'UPDATE_PAGE',
     SEARCH_PRODUCT: 'SEARCH_PRODUCT',
@@ -53,15 +54,13 @@ export const getProducts =
         }
     };
 
-export const searchProduct = (url) => async (dispatch) => {
+export const searchProduct = (value) => async (dispatch) => {
     try {
-        const res = await getDataAPI(url);
-        if (res.status === 200) {
-            dispatch({
-                type: TYPES.SEARCH_PRODUCT,
-                payload: res.data.products,
-            });
-        }
+        // const res = await getDataAPI(url);
+        dispatch({
+            type: TYPES.SEARCH_PRODUCT,
+            payload: value,
+        });
     } catch (err) {
         dispatch({ type: 'LOADING', payload: false });
         GetNotification(err.response.data.msg, 'error');
@@ -94,6 +93,18 @@ export const findProductDiscount = (id) => async (dispatch) => {
     try {
         dispatch({ type: TYPES.FIND_PRODUCT_DISCOUNT, payload: id });
     } catch (err) {
+        GetNotification(err.response.data.msg, 'error');
+    }
+};
+
+export const getFullProduct = () => async (dispatch) => {
+    try {
+        const res = await getDataAPI('all_pro');
+        if (res.status === 200) {
+            dispatch({ type: TYPES.GET_FULL_PRODUCTS, payload: res.data.products });
+        }
+    } catch (err) {
+        dispatch({ type: 'LOADING', payload: false });
         GetNotification(err.response.data.msg, 'error');
     }
 };

@@ -65,12 +65,12 @@ const SearchComponent = ({ title, isBack, isSearchOder, setSearch }) => {
         }
 
         typingTimeoutRef.current = setTimeout(async () => {
-            if (!e.target.value) {
-                dispatch(updateIsSearch(false));
-            } else {
-                dispatch(updateIsSearch(true));
-            }
-            dispatch(searchProduct(products.params + e.target.value));
+            // if (!e.target.value) {
+            //     dispatch(updateIsSearch(false));
+            // } else {
+            //     dispatch(updateIsSearch(true));
+            // }
+            dispatch(searchProduct(e.target.value));
         }, 120);
     };
 

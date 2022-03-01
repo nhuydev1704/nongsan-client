@@ -6,7 +6,7 @@ import AuthPage from './pages/auth';
 import { addSocket, refreshToken } from './redux/actions/authAction';
 import { getCategories } from './redux/actions/categoryAction';
 import { getPayments } from './redux/actions/paymentAction';
-import { getProducts } from './redux/actions/productAction';
+import { getFullProduct, getProducts } from './redux/actions/productAction';
 import PageRender from './routes/PageRender';
 import io from 'socket.io-client';
 import { getBanners } from './redux/actions/bannerAction';
@@ -27,6 +27,7 @@ function App() {
         dispatch(getBanners());
         dispatch(getProducts());
         dispatch(getPayments());
+        dispatch(getFullProduct());
 
         return () => socket.close();
     }, [dispatch, auth.token]);

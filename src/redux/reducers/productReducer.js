@@ -1,8 +1,11 @@
+import { removeAccents } from '../../utils/common';
 import { TYPES } from '../actions/productAction';
 
 const initialState = {
     result: 0,
     products: [],
+    full_products: [],
+    old_products: [],
     isNav: false,
     params: '',
     defaultPage: false,
@@ -16,6 +19,7 @@ const productReducer = (state = initialState, action) => {
                 ...state,
                 result: action.payload.result,
                 products: action.payload.products,
+                old_products: action.payload.products,
                 isNav: action.payload.isNav,
                 params: action.payload.params,
             };
@@ -46,7 +50,15 @@ const productReducer = (state = initialState, action) => {
         case TYPES.SEARCH_PRODUCT:
             return {
                 ...state,
-                products: action.payload,
+                products: action.payload
+                    ? [
+                          ...state.full_products.filter((product) => {
+                              return removeAccents(product.title)
+                                  .toLowerCase()
+                                  .includes(removeAccents(action.payload).toLowerCase());
+                          }),
+                      ]
+                    : state.old_products,
             };
 
         case TYPES.FIND_PRODUCT_DISCOUNT:
@@ -62,6 +74,12 @@ const productReducer = (state = initialState, action) => {
                     ),
                 ],
             };
+        case TYPES.GET_FULL_PRODUCTS:
+            return {
+                ...state,
+                full_products: action.payload,
+            };
+
         default:
             return state;
     }
