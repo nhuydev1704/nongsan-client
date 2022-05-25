@@ -11,6 +11,8 @@ import PageRender from './routes/PageRender';
 import io from 'socket.io-client';
 import { getBanners } from './redux/actions/bannerAction';
 import ReportWebview from './pages/rp_webview';
+import RulesWebview from './pages/rules/RulesWebview';
+import PrivateWebview from './pages/private';
 
 function App() {
     const [loadingPage, setLoadingPage] = React.useState(false);
@@ -50,9 +52,11 @@ function App() {
         <>
             {loadingPage ? (
                 <div>
-                    {pathname == '/rp_webview' ? (
+                    {pathname.includes('webview') ? (
                         <Routes>
                             <Route path="/rp_webview" element={<ReportWebview />} />
+                            <Route path="/rules_webview" element={<RulesWebview />} />
+                            <Route path="/private_webview" element={<PrivateWebview />} />
                         </Routes>
                     ) : (
                         <Routes>

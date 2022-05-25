@@ -63,6 +63,18 @@ const NavAdmin = ({ active, setActive }) => {
                     </div>
                 </li>
             </Link>
+            <Link onClick={() => setActive('policy')} to="/policy" className="flex items-center">
+                <li
+                    className={`${
+                        active === 'policy' && 'bg-indigo-700'
+                    } flex w-full justify-between transition-all text-white font-medium hover:text-gray-300  cursor-pointer items-center px-8 py-3 my-[0.40rem]`}
+                >
+                    <div className="flex items-center">
+                        <ViewCarouselIcon />
+                        <span className="text-sm ml-4">Chính sách và điều khoản</span>
+                    </div>
+                </li>
+            </Link>
         </>
     );
 };

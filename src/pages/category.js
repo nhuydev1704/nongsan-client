@@ -56,7 +56,7 @@ const Category = () => {
             navigate('/');
             return;
         }
-        if (!(category.category.length > 0) && !category) return;
+        if (!(category?.category?.length > 0) && !category) return;
         // map category category and children category
         const mapCategory = [];
 
@@ -126,103 +126,114 @@ const Category = () => {
                                     Thêm danh mục
                                 </Button>
                             </div>
-                            <DataGrid
-                                disableColumnFilter
-                                sortModel={sortModel}
-                                disableDensitySelector
-                                hideFooterSelectedRowCount
-                                disableColumnSelector
-                                disableSelectionOnClick
-                                localeText={GRID_DEFAULT_LOCALE_TEXT}
-                                rows={dataCategory}
-                                columns={[
-                                    ...columns,
-                                    {
-                                        field: '',
-                                        headerName: 'Thao tác',
-                                        width: 140,
-                                        renderCell: (cellValues) => {
-                                            return (
-                                                <div className="flex justify-center align-middle w-full">
-                                                    <IconButton
-                                                        onClick={
-                                                            // delete category
-                                                            () => {
-                                                                if (!cellValues.row.parent) {
-                                                                    deleteDataAPI('category/' + cellValues.id)
-                                                                        .then((res) => {
-                                                                            GetNotification(res.data.msg, 'success');
-                                                                            dispatch(getCategories());
-                                                                        })
-                                                                        .catch((err) => {
-                                                                            GetNotification(
-                                                                                err.response.data.msg,
-                                                                                'error'
-                                                                            );
-                                                                        });
-                                                                } else {
-                                                                    // delete children category
-                                                                    deleteDataAPI('category/children/' + cellValues.id)
-                                                                        .then((res) => {
-                                                                            GetNotification(res.data.msg, 'success');
-                                                                            dispatch(getCategories());
-                                                                        })
-                                                                        .catch((err) => {
-                                                                            GetNotification(
-                                                                                err.response.data.msg,
-                                                                                'error'
-                                                                            );
-                                                                        });
+                            {dataCategory && dataCategory.length > 0 && (
+                                <DataGrid
+                                    disableColumnFilter
+                                    sortModel={sortModel}
+                                    disableDensitySelector
+                                    hideFooterSelectedRowCount
+                                    disableColumnSelector
+                                    disableSelectionOnClick
+                                    localeText={GRID_DEFAULT_LOCALE_TEXT}
+                                    rows={dataCategory}
+                                    columns={[
+                                        ...columns,
+                                        {
+                                            field: '',
+                                            headerName: 'Thao tác',
+                                            width: 140,
+                                            renderCell: (cellValues) => {
+                                                return (
+                                                    <div className="flex justify-center align-middle w-full">
+                                                        <IconButton
+                                                            onClick={
+                                                                // delete category
+                                                                () => {
+                                                                    if (!cellValues.row.parent) {
+                                                                        deleteDataAPI('category/' + cellValues.id)
+                                                                            .then((res) => {
+                                                                                GetNotification(
+                                                                                    res.data.msg,
+                                                                                    'success'
+                                                                                );
+                                                                                dispatch(getCategories());
+                                                                            })
+                                                                            .catch((err) => {
+                                                                                GetNotification(
+                                                                                    err.response.data.msg,
+                                                                                    'error'
+                                                                                );
+                                                                            });
+                                                                    } else {
+                                                                        // delete children category
+                                                                        deleteDataAPI(
+                                                                            'category/children/' + cellValues.id
+                                                                        )
+                                                                            .then((res) => {
+                                                                                GetNotification(
+                                                                                    res.data.msg,
+                                                                                    'success'
+                                                                                );
+                                                                                dispatch(getCategories());
+                                                                            })
+                                                                            .catch((err) => {
+                                                                                GetNotification(
+                                                                                    err.response.data.msg,
+                                                                                    'error'
+                                                                                );
+                                                                            });
+                                                                    }
                                                                 }
                                                             }
-                                                        }
-                                                        aria-label="delete"
-                                                        size="large"
-                                                    >
-                                                        <DeleteIcon />
-                                                    </IconButton>
-                                                    <IconButton
-                                                        onClick={() => {
-                                                            setOpen(true);
-                                                            setDataCate({
-                                                                ...dataCate,
-                                                                id: cellValues.id,
-                                                                name: cellValues.row.name,
-                                                                selected: {
-                                                                    name:
-                                                                        cellValues.row.type === 'agricultural'
-                                                                            ? 'Nông sản'
-                                                                            : 'Khác',
-                                                                    value: cellValues.row.type,
-                                                                },
-                                                                selectedParent: category.category.find(
-                                                                    (item) => item._id === cellValues?.row?.parent
-                                                                )
-                                                                    ? category.category.find(
-                                                                          (item) => item._id === cellValues?.row?.parent
-                                                                      )
-                                                                    : {
-                                                                          name: 'Chọn danh mục cha',
-                                                                          value: '',
-                                                                      },
-                                                            });
-                                                        }}
-                                                        aria-label="edit"
-                                                        size="large"
-                                                    >
-                                                        <EditIcon />
-                                                    </IconButton>
-                                                </div>
-                                            );
+                                                            aria-label="delete"
+                                                            size="large"
+                                                        >
+                                                            <DeleteIcon />
+                                                        </IconButton>
+                                                        <IconButton
+                                                            onClick={() => {
+                                                                setOpen(true);
+                                                                setDataCate({
+                                                                    ...dataCate,
+                                                                    id: cellValues.id,
+                                                                    name: cellValues.row.name,
+                                                                    selected: {
+                                                                        name:
+                                                                            cellValues.row.type === 'agricultural'
+                                                                                ? 'Nông sản'
+                                                                                : 'Khác',
+                                                                        value: cellValues.row.type,
+                                                                    },
+                                                                    selectedParent: category.category.find(
+                                                                        (item) => item._id === cellValues?.row?.parent
+                                                                    )
+                                                                        ? category.category.find(
+                                                                              (item) =>
+                                                                                  item._id === cellValues?.row?.parent
+                                                                          )
+                                                                        : {
+                                                                              name: 'Chọn danh mục cha',
+                                                                              value: '',
+                                                                          },
+                                                                });
+                                                            }}
+                                                            aria-label="edit"
+                                                            size="large"
+                                                        >
+                                                            <EditIcon />
+                                                        </IconButton>
+                                                    </div>
+                                                );
+                                            },
                                         },
-                                    },
-                                ]}
-                                loading={loading}
-                                autoHeight
-                                pageSize={7}
-                                rowsPerPageOptions={[7]}
-                                onSortModelChange={(model) => setSortModel(model)}
-                            />
+                                    ]}
+                                    loading={loading}
+                                    autoHeight
+                                    pageSize={7}
+                                    rowsPerPageOptions={[7]}
+                                    onSortModelChange={(model) => setSortModel(model)}
+                                />
+                            )}
                         </Item>
                     </Grid>
                 </Grid>
