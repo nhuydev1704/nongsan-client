@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import HomePage from './pages';
 import AuthPage from './pages/auth';
 import { addSocket, refreshToken } from './redux/actions/authAction';
@@ -10,6 +10,7 @@ import { getFullProduct, getProducts } from './redux/actions/productAction';
 import PageRender from './routes/PageRender';
 import io from 'socket.io-client';
 import { getBanners } from './redux/actions/bannerAction';
+import ReportWebview from './pages/rp_webview';
 
 function App() {
     const [loadingPage, setLoadingPage] = React.useState(false);
@@ -17,6 +18,8 @@ function App() {
     const { auth } = useSelector((state) => state);
 
     const dispatch = useDispatch();
+
+    const { pathname } = useLocation();
 
     React.useEffect(() => {
         const socket = io(`${process.env.REACT_APP_API}`, { transports: ['websocket'] });
@@ -46,9 +49,12 @@ function App() {
     return (
         <>
             {loadingPage ? (
-                <Router>
-                    {/* {auth.token && <Header />} */}
-                    <div>
+                <div>
+                    {pathname == '/rp_webview' ? (
+                        <Routes>
+                            <Route path="/rp_webview" element={<ReportWebview />} />
+                        </Routes>
+                    ) : (
                         <Routes>
                             <Route path="/" element={auth?.token && checkLogin ? <HomePage /> : <AuthPage />} />
                             <Route
@@ -60,8 +66,8 @@ function App() {
                                 element={auth?.token && checkLogin ? <PageRender /> : <Navigate to="/" />}
                             />
                         </Routes>
-                    </div>
-                </Router>
+                    )}
+                </div>
             ) : (
                 <div className="page_loading">
                     <div className="box">

@@ -11,6 +11,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'moment/locale/vi'; // without this line it didn't work
 import moment from 'moment';
+import { BrowserRouter as Router, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
 moment.locale('vi');
 
@@ -27,7 +28,9 @@ ReactDOM.render(
                 draggable
                 pauseOnHover
             />
-            <App />
+            <Router>
+                <App />
+            </Router>
         </DataProvider>
     </React.StrictMode>,
     document.getElementById('root')
