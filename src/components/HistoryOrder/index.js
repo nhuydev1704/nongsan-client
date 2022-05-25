@@ -109,6 +109,7 @@ const HistoryOrder = ({ historyOrder, loading, auth, callback, setCallback }) =>
                                                               <MenuItem value="0">Hủy</MenuItem>
                                                               <MenuItem value="1">Chờ duyệt</MenuItem>
                                                               <MenuItem value="2">Đã duyệt</MenuItem>
+                                                              <MenuItem value="3">Hoàn thành</MenuItem>
                                                           </Select>
                                                       </>
                                                   );
