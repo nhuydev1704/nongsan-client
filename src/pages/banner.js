@@ -8,6 +8,7 @@ import { getDataAPI, postDataAPI, putDataAPI } from '../api/fetchData';
 import FormBanner from '../components/Banner/FormBanner';
 import ProviewBanner from '../components/Banner/ProviewBanner';
 import LayoutComponent from '../components/global/LayoutComponent';
+import { getBanners } from '../redux/actions/bannerAction';
 import { imageUpload } from '../utils/common';
 import GetNotification from '../utils/GetNotification';
 
@@ -46,6 +47,8 @@ const Banner = ({ id }) => {
                     image: photo.url,
                 });
                 if (res.status === 200) {
+                    dispatch(getBanners());
+                    navigate('/');
                     GetNotification('Cập nhật thành công', 'success');
                 }
             } else {
@@ -54,6 +57,8 @@ const Banner = ({ id }) => {
                     image: photo.url,
                 });
                 if (res.status === 200) {
+                    dispatch(getBanners());
+                    navigate('/');
                     GetNotification('Thêm thành công', 'success');
                 }
             }

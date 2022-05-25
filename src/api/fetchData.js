@@ -1,7 +1,6 @@
 import axios from 'axios';
 const URL = process.env.REACT_APP_API;
 axios.defaults.withCredentials = true;
-console.log('🚀 ~ file: fetchData.js ~ line 3 ~ URL', URL);
 
 export const getDataAPI = async (url, token) => {
     const res = await axios.get(URL + '/api/' + url, {

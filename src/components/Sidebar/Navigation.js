@@ -8,6 +8,7 @@ import { clearSort, findCategory } from '../../redux/actions/categoryAction';
 import NavAdmin from './NavAdmin';
 
 import { Link } from 'react-router-dom';
+import { getBanners, updateBanner } from '../../redux/actions/bannerAction';
 const Navigation = () => {
     const [active, setActive] = React.useState('Home');
     const dispatch = useDispatch();
@@ -24,6 +25,8 @@ const Navigation = () => {
                         dispatch(findCategory('', 'Trang chủ'));
                         setActive('Home');
                         dispatch({ type: TYPES.UPDATE_PAGE, payload: true });
+                        dispatch(updateBanner(''));
+                        dispatch(getBanners());
                     }}
                     className={`${
                         active === 'Home' && 'bg-indigo-700'
@@ -57,6 +60,8 @@ const Navigation = () => {
                                                 dispatch(getProducts(1, `category=${item._id}`, '', true));
                                                 dispatch(findCategory(item._id, item.name));
                                                 dispatch({ type: TYPES.UPDATE_PAGE, payload: true });
+                                                dispatch(updateBanner(''));
+                                                dispatch(getBanners());
                                             }}
                                             className={`${
                                                 active === item.name && 'bg-indigo-700'
@@ -94,6 +99,8 @@ const Navigation = () => {
                                                 dispatch(getProducts(1, `category=${item._id}`, '', true));
                                                 dispatch(findCategory(item._id, item.name));
                                                 dispatch({ type: TYPES.UPDATE_PAGE, payload: true });
+                                                dispatch(updateBanner(''));
+                                                dispatch(getBanners());
                                             }}
                                             className={`${
                                                 active === item.name && 'bg-indigo-700'

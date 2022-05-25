@@ -87,7 +87,13 @@ const HomePage = () => {
                             >
                                 <img
                                     src={item.image}
-                                    style={{ width: 'calc(100vw - 270px)', maxHeight: '320px', zIndex: -1 }}
+                                    style={{
+                                        width: 'calc(100vw - 270px)',
+                                        maxHeight: '320px',
+                                        minHeight: '320px',
+                                        zIndex: -1,
+                                        // objectFit: 'cover',
+                                    }}
                                     alt="banner_sua"
                                 />
                                 {admin && (

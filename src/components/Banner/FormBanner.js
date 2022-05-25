@@ -10,7 +10,6 @@ import { imageUpload } from '../../utils/common';
 import AddIcon from '@mui/icons-material/Add';
 
 const FormBanner = ({ id, dataBanner, setDataBanner, handleSubmit }) => {
-    console.log('🚀 ~ file: FormBanner.js ~ line 13 ~ FormBanner ~ id', id);
     const [dataCategory, setDataCategory] = React.useState([]);
     const [selected, setSelected] = React.useState({});
     const { category, auth } = useSelector((state) => state);

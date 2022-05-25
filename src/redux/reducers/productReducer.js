@@ -65,7 +65,7 @@ const productReducer = (state = initialState, action) => {
             return {
                 ...state,
                 products: [
-                    ...state.products.filter(
+                    ...state.full_products.filter(
                         // filter product by category in action.payload
                         (product) =>
                             (product?.child_category?._id === action.payload ||

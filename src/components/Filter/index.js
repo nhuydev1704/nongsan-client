@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { clearSort } from '../../redux/actions/categoryAction';
 import { getProducts, TYPES } from '../../redux/actions/productAction';
 import Slider from 'react-slick';
+import { getBanners, updateBanner } from '../../redux/actions/bannerAction';
 const people = [
     { name: 'Mới nhất', value: '' },
     { name: 'Cũ nhất', value: 'sort=oldest' },
@@ -73,6 +74,8 @@ const Filter = () => {
                                         : dispatch(getProducts(1, `category=${item._id}`, '', true));
                                     dispatch({ type: TYPES.UPDATE_PAGE, payload: true });
                                     setChildCate(item._id);
+                                    dispatch(updateBanner(''));
+                                    dispatch(getBanners());
                                 }}
                             >
                                 {item.name}
