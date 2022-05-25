@@ -8,25 +8,21 @@ import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import PieChartReport from '../components/dashboard/PieChart';
 import ColumnChart from '../components/dashboard/ColumnChart';
+import { useLocation } from 'react-router-dom';
 
 const ReportWebview = () => {
     const [reportPayment, setReportPayment] = React.useState([]);
-    const [products, setProducts] = React.useState([]);
     const [totalOrder, setTotalOrder] = React.useState(0);
-    const [totalUser, setTotalUser] = React.useState(0);
     const [loading, setLoading] = React.useState(false);
-    const [users, setUsers] = React.useState([]);
-
+    const { search } = useLocation();
+    const token = search.slice(search.indexOf('=') + 1);
     React.useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            const res = await getDataAPI('report');
+            const res = await getDataAPI('report_auth', token);
             if (res.status === 200) {
                 setReportPayment(res.data.payments);
-                setProducts(res.data.products);
                 setTotalOrder(res.data.totalOrder);
-                setTotalUser(res.data.totalUser);
-                setUsers(res.data.users);
 
                 setLoading(false);
             }
@@ -35,13 +31,13 @@ const ReportWebview = () => {
     }, []);
 
     return (
-        <div className="mt-10">
+        <div className="mt-6 px-3">
             <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={loading}>
                 <CircularProgress color="inherit" />
             </Backdrop>
             <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
                 <CardStatistic
-                    title="Doanh thu"
+                    title="Đã chi"
                     total={formatNumber(reportPayment.reduce((acc, cur) => acc + cur.priceCheckout, 0))}
                     svg={
                         <svg fill="currentColor" viewBox="0 0 20 20" className="w-5 h-5">
@@ -54,8 +50,8 @@ const ReportWebview = () => {
                     }
                 />
                 <CardStatistic
-                    title="Doanh số"
-                    total={formatNumber(products.reduce((acc, cur) => acc + cur?.sold, 0))}
+                    title="Dã mua (sản phẩm)"
+                    total={formatNumber(reportPayment.reduce((acc, cur) => acc + cur?.cart.length, 0))}
                     svg={
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +94,7 @@ const ReportWebview = () => {
                         </svg>
                     }
                 />
-                <CardStatistic
+                {/* <CardStatistic
                     title="Khách hàng"
                     total={formatNumber(totalUser)}
                     svg={
@@ -106,13 +102,13 @@ const ReportWebview = () => {
                             <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"></path>
                         </svg>
                     }
-                />
+                /> */}
             </div>
-            <div className="h-[500px] pb-12 pt-8 px-6 mb-4 bg-white rounded-lg shadow-xl">
-                <h2 className="mb-3 font-bold">Biểu đồ thống kê doanh thu</h2>
-                <LineChartTotal payments={reportPayment} />
+            <div className="h-[500px] pb-12 pt-8 px-2 mb-4 bg-white rounded-lg shadow-xl">
+                <h2 className="mb-3 font-bold">Biểu đồ thống kê chi tiêu</h2>
+                <LineChartTotal isWebview payments={reportPayment} />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="h-[500px] pb-12 pt-8 px-6 bg-white rounded-lg shadow-xl">
                     <h2>Biểu đồ thống kê giới tính khách hàng</h2>
                     <PieChartReport users={users} />
@@ -121,7 +117,7 @@ const ReportWebview = () => {
                     <h2>Biểu đồ thống kê doanh thu cao nhất 5 sản phẩm</h2>
                     <ColumnChart products={products} />
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };

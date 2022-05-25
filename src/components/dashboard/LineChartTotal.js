@@ -29,7 +29,7 @@ const CustomTooltip = ({ active, payload, label }) => {
     return null;
 };
 
-const LineChartTotal = ({ payments }) => {
+const LineChartTotal = ({ payments, isWebview }) => {
     let sumedUpDates = [];
     let prices = [];
     let carts = [];
@@ -78,14 +78,28 @@ const LineChartTotal = ({ payments }) => {
     return (
         <>
             <ResponsiveContainer width="100%" height="100%">
-                <LineChart width={500} height={300} data={data ? data : []}>
+                <LineChart data={data ? data : []}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="createdAt" height={60} />
-                    <YAxis />
+                    {!isWebview && <YAxis />}
                     <Tooltip content={<CustomTooltip />} />
                     <Legend />
-                    <Line type="monotone" dataKey="priceCheckout" stroke="#8884d8" label={<CustomizedLabel />} />
-                    <Line type="monotone" dataKey="cart" stroke="#82ca9d" />
+                    {isWebview ? (
+                        <Line
+                            name="Chi tiêu"
+                            type="monotone"
+                            dataKey="priceCheckout"
+                            stroke="#8884d8"
+                            label={<CustomizedLabel />}
+                        />
+                    ) : (
+                        <Line type="monotone" dataKey="priceCheckout" stroke="#8884d8" label={<CustomizedLabel />} />
+                    )}
+                    {isWebview ? (
+                        <Line name="Ngày chi" type="monotone" dataKey="cart" stroke="#82ca9d" />
+                    ) : (
+                        <Line type="monotone" dataKey="cart" stroke="#82ca9d" />
+                    )}
                 </LineChart>
             </ResponsiveContainer>
         </>
