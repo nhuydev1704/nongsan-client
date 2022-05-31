@@ -48,29 +48,31 @@ const data = [
 
 const BarchartPayment = ({ products, isWebview }) => {
     return (
-        <ResponsiveContainer
+        <div
             style={
-                isWebview && {
+                !isWebview && {
                     marginLeft: '-61px',
+                    width: 'calc(100% + 61px)',
+                    height: '100%',
                 }
             }
-            width={isWebview ? '120%' : '100%'}
-            height="100%"
         >
-            <BarChart data={products.filter((p) => p.sold)} barSize={20}>
-                <XAxis
-                    dataKey="title"
-                    tickFormatter={(value) => value.slice(0, 4) + '...'}
-                    scale="point"
-                    padding={{ left: 10, right: 10 }}
-                />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <CartesianGrid strokeDasharray="3 3" />
-                <Bar name="Đã bán" dataKey="sold" fill="#8884d8" background={{ fill: '#eee' }} />
-            </BarChart>
-        </ResponsiveContainer>
+            <ResponsiveContainer width={!isWebview ? '100%' : '100%'} height="100%">
+                <BarChart data={products.filter((p) => p.sold)} barSize={20}>
+                    <XAxis
+                        dataKey="title"
+                        tickFormatter={(value) => value.slice(0, 4) + '...'}
+                        scale="point"
+                        padding={{ left: 10, right: 10 }}
+                    />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <Bar name="Đã bán" dataKey="sold" fill="#8884d8" background={{ fill: '#eee' }} />
+                </BarChart>
+            </ResponsiveContainer>
+        </div>
     );
 };
 
