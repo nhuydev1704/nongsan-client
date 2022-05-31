@@ -50,14 +50,14 @@ const BarchartPayment = ({ products, isWebview }) => {
     return (
         <div
             style={
-                !isWebview && {
+                isWebview && {
                     marginLeft: '-61px',
                     width: 'calc(100% + 61px)',
                     height: '100%',
                 }
             }
         >
-            <ResponsiveContainer width={!isWebview ? '100%' : '100%'} height="100%">
+            <ResponsiveContainer width={isWebview ? '100%' : '100%'} height="100%">
                 <BarChart data={products.filter((p) => p.sold)} barSize={20}>
                     <XAxis
                         dataKey="title"
