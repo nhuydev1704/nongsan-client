@@ -46,9 +46,17 @@ const data = [
     },
 ];
 
-const BarchartPayment = ({ products }) => {
+const BarchartPayment = ({ products, isWebview }) => {
     return (
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer
+            style={
+                isWebview && {
+                    marginLeft: '-61px',
+                }
+            }
+            width={isWebview ? '120%' : '100%'}
+            height="100%"
+        >
             <BarChart data={products.filter((p) => p.sold)} barSize={20}>
                 <XAxis
                     dataKey="title"

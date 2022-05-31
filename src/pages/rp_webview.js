@@ -160,7 +160,7 @@ const ReportWebview = () => {
             </div>
             <div className="h-[500px] pb-12 pt-8 px-6 mb-4 bg-white rounded-lg shadow-xl">
                 <h2 className="mb-3 font-bold">Biểu đồ thống kê sản phẩm bán chạy</h2>
-                <BarchartPayment products={products} />
+                <BarchartPayment isWebview products={products} />
             </div>
 
             {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
