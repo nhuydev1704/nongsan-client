@@ -26,12 +26,19 @@ const ReportWebview = () => {
             if (res.status === 200) {
                 setReportPayment(res.data.payments);
                 setTotalOrder(res.data.totalOrder);
+            }
+        };
+        fetchData();
+
+        const fetchData2 = async () => {
+            const res = await getDataAPI('report');
+            if (res.status === 200) {
                 setProducts(res.data.products);
                 setLoading(false);
             }
         };
-        fetchData();
-    }, []);
+        fetchData2();
+    }, [token]);
 
     return (
         <div className="mt-6 px-3">
