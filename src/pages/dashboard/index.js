@@ -8,6 +8,7 @@ import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import PieChartReport from '../../components/dashboard/PieChart';
 import ColumnChart from '../../components/dashboard/ColumnChart';
+import BarchartPayment from '../../components/dashboard/BarchartPayment';
 
 const DashBoard = () => {
     const [reportPayment, setReportPayment] = React.useState([]);
@@ -112,6 +113,10 @@ const DashBoard = () => {
                 <div className="h-[500px] pb-12 pt-8 px-6 mb-4 bg-white rounded-lg shadow-xl">
                     <h2 className="mb-3 font-bold">Biểu đồ thống kê doanh thu</h2>
                     <LineChartTotal payments={reportPayment} />
+                </div>
+                <div className="h-[500px] pb-12 pt-8 px-6 mb-4 bg-white rounded-lg shadow-xl">
+                    <h2 className="mb-3 font-bold">Biểu đồ thống kê sản phẩm bán chạy</h2>
+                    <BarchartPayment products={products} />
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="h-[500px] pb-12 pt-8 px-6 bg-white rounded-lg shadow-xl">

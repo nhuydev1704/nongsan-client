@@ -9,12 +9,15 @@ import CircularProgress from '@mui/material/CircularProgress';
 import PieChartReport from '../components/dashboard/PieChart';
 import ColumnChart from '../components/dashboard/ColumnChart';
 import { useLocation } from 'react-router-dom';
+import BarchartPayment from '../components/dashboard/BarchartPayment';
+import moment from 'moment';
 
 const ReportWebview = () => {
     const [reportPayment, setReportPayment] = React.useState([]);
     const [totalOrder, setTotalOrder] = React.useState(0);
     const [loading, setLoading] = React.useState(false);
     const { search } = useLocation();
+    const [products, setProducts] = React.useState([]);
     const token = search.slice(search.indexOf('=') + 1);
     React.useEffect(() => {
         const fetchData = async () => {
@@ -23,7 +26,7 @@ const ReportWebview = () => {
             if (res.status === 200) {
                 setReportPayment(res.data.payments);
                 setTotalOrder(res.data.totalOrder);
-
+                setProducts(res.data.products);
                 setLoading(false);
             }
         };
@@ -94,6 +97,46 @@ const ReportWebview = () => {
                         </svg>
                     }
                 />
+                <CardStatistic
+                    title="Sản phẩm mới"
+                    total={formatNumber(
+                        products.filter(
+                            (product) => moment(product.createdAt).format('DD') === moment(new Date()).format('DD')
+                        ).length
+                    )}
+                    svg={
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            x="0px"
+                            y="0px"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 172 172"
+                            fill="currentColor"
+                        >
+                            <g
+                                fill="currentColor"
+                                fillRule="nonzero"
+                                stroke="none"
+                                strokeWidth="1"
+                                strokeLinecap="butt"
+                                strokeLinejoin="miter"
+                                strokeMiterlimit="10"
+                                strokeDasharray=""
+                                strokeDashoffset="0"
+                                fontFamily="none"
+                                fontWeight="none"
+                                fontSize="none"
+                                textAnchor="none"
+                            >
+                                <path d="M0,172v-172h172v172z" fill="none"></path>
+                                <g fill="currentColor">
+                                    <path d="M21.5,21.5v129h64.5v-32.25v-64.5v-32.25zM86,53.75c0,17.7805 14.4695,32.25 32.25,32.25c17.7805,0 32.25,-14.4695 32.25,-32.25c0,-17.7805 -14.4695,-32.25 -32.25,-32.25c-17.7805,0 -32.25,14.4695 -32.25,32.25zM118.25,86c-17.7805,0 -32.25,14.4695 -32.25,32.25c0,17.7805 14.4695,32.25 32.25,32.25c17.7805,0 32.25,-14.4695 32.25,-32.25c0,-17.7805 -14.4695,-32.25 -32.25,-32.25z"></path>
+                                </g>
+                            </g>
+                        </svg>
+                    }
+                />
                 {/* <CardStatistic
                     title="Khách hàng"
                     total={formatNumber(totalUser)}
@@ -108,6 +151,11 @@ const ReportWebview = () => {
                 <h2 className="mb-3 font-bold">Biểu đồ thống kê chi tiêu</h2>
                 <LineChartTotal isWebview payments={reportPayment} />
             </div>
+            <div className="h-[500px] pb-12 pt-8 px-6 mb-4 bg-white rounded-lg shadow-xl">
+                <h2 className="mb-3 font-bold">Biểu đồ thống kê sản phẩm bán chạy</h2>
+                <BarchartPayment products={products} />
+            </div>
+
             {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="h-[500px] pb-12 pt-8 px-6 bg-white rounded-lg shadow-xl">
                     <h2>Biểu đồ thống kê giới tính khách hàng</h2>
