@@ -16,6 +16,10 @@ const History = () => {
     const [historyOrder, setHistoryOrder] = React.useState([]);
     const [loading, setLoading] = React.useState(false);
     const [callback, setCallback] = React.useState(false);
+    const [status, setStatus] = React.useState('all');
+    const [filterStatus, setFilterStatus] = React.useState('all');
+    const [filterPayment, setFilterPayment] = React.useState([]);
+    const [filterByStatus, setFilterByStatus] = React.useState([]);
 
     React.useEffect(() => {
         (async () => {
@@ -43,14 +47,42 @@ const History = () => {
         }
     }, [auth.token, navigate]);
 
+    React.useEffect(() => {
+        console.log('🚀 ~ file: history.js ~ line 59 ~ React.useEffect ~ filterStatus', filterStatus);
+
+        if (status === 'all') {
+            setFilterPayment(historyOrder);
+            setFilterByStatus(historyOrder);
+        } else {
+            setFilterPayment(historyOrder.filter((item) => item.status === status));
+            setFilterByStatus(historyOrder.filter((item) => item.status === status));
+        }
+    }, [status, historyOrder]);
+
+    React.useEffect(() => {
+        if (filterStatus === 'all') {
+            setFilterPayment(filterByStatus);
+        } else {
+            if (filterStatus === '1') {
+                setFilterPayment(filterByStatus.filter((item) => !item.type));
+            } else {
+                setFilterPayment(filterByStatus.filter((item) => item.type));
+            }
+        }
+    }, [filterStatus]);
+
     return (
         <LayoutComponent title="Lịch sử đặt hàng" isBack isSearchOder setSearch={setSearch}>
             <HistoryOrder
-                historyOrder={historyOrder}
+                historyOrder={filterPayment && filterPayment.length > 0 && filterPayment}
                 loading={loading}
                 auth={auth}
                 setCallback={setCallback}
                 callback={callback}
+                status={status}
+                setStatus={setStatus}
+                filterPayment={filterStatus}
+                setFilterPayment={setFilterStatus}
             />
         </LayoutComponent>
     );

@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { FormControl, Grid, InputLabel } from '@mui/material';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Paper from '@mui/material/Paper';
@@ -25,9 +25,20 @@ const Item = styled(Paper)(({ theme }) => ({
     // height: '600px',
 }));
 
-const HistoryOrder = ({ historyOrder, loading, auth, callback, setCallback }) => {
+const HistoryOrder = ({
+    filterPayment,
+    setFilterPayment,
+    historyOrder,
+    loading,
+    auth,
+    callback,
+    setCallback,
+    status,
+    setStatus,
+}) => {
     const [open, setOpen] = React.useState(false);
     const [cart, setCart] = React.useState([]);
+    console.log('🚀 ~ file: index.js ~ line 41 ~ cart', cart);
     const dispatch = useDispatch();
 
     const [sortModel, setSortModel] = React.useState([
@@ -41,6 +52,38 @@ const HistoryOrder = ({ historyOrder, loading, auth, callback, setCallback }) =>
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={12}>
                     <Item>
+                        <FormControl style={{ width: '200px', margin: '15px 0' }}>
+                            <InputLabel id="demo-simple-select-label">Trạng thái</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={status}
+                                label="Trạng thái"
+                                size="small"
+                                onChange={(e) => setStatus(e.target.value)}
+                            >
+                                <MenuItem value="all">Tất cả</MenuItem>
+                                <MenuItem value="1">Chờ duyệt</MenuItem>
+                                <MenuItem value="2">Đã duyệt</MenuItem>
+                                <MenuItem value="3">Hoàn thành</MenuItem>
+                                <MenuItem value="0">Hủy</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <FormControl style={{ width: '200px', margin: '15px 40px' }}>
+                            <InputLabel id="demo-simple-select-label">Hình thức thanh toán</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={filterPayment}
+                                label="Hình thức thanh toán"
+                                size="small"
+                                onChange={(e) => setFilterPayment(e.target.value)}
+                            >
+                                <MenuItem value="all">Tất cả</MenuItem>
+                                <MenuItem value="1">Tiền mặt</MenuItem>
+                                <MenuItem value="2">Paypal</MenuItem>
+                            </Select>
+                        </FormControl>
                         <DataGrid
                             disableColumnFilter
                             sortModel={sortModel}
@@ -61,8 +104,8 @@ const HistoryOrder = ({ historyOrder, loading, auth, callback, setCallback }) =>
                                                       <Button
                                                           variant="text"
                                                           onClick={() => {
+                                                              setCart(cellValues);
                                                               setOpen(true);
-                                                              setCart(cellValues.value);
                                                           }}
                                                       >
                                                           Chi tiết
@@ -165,8 +208,8 @@ const HistoryOrder = ({ historyOrder, loading, auth, callback, setCallback }) =>
                                                       <Button
                                                           variant="text"
                                                           onClick={() => {
+                                                              setCart(cellValues);
                                                               setOpen(true);
-                                                              setCart(cellValues.value);
                                                           }}
                                                       >
                                                           Chi tiết
