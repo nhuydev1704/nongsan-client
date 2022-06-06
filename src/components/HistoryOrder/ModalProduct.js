@@ -110,7 +110,7 @@ const ModalProduct = ({ open, setOpen, dataProduct }) => {
                                     <span>
                                         Tổng tiền:{' '}
                                         <span style={{ color: 'red' }}>
-                                            {formatNumber(dataProduct.row.priceCheckout)}
+                                            {formatNumber(dataProduct?.row?.priceCheckout)}
                                         </span>
                                     </span>
                                 </div>
