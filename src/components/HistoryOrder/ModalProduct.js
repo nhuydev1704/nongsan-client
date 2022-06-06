@@ -56,7 +56,7 @@ const ModalProduct = ({ open, setOpen, dataProduct }) => {
                                     <Stack direction="row">
                                         <div>Tên khách hàng: </div>
                                         <div style={{ fontWeight: 'bold', marginLeft: '4px' }}>
-                                            {dataProduct.row.name}
+                                            {dataProduct?.row?.name}
                                         </div>
                                     </Stack>
                                 </Grid>
@@ -64,7 +64,7 @@ const ModalProduct = ({ open, setOpen, dataProduct }) => {
                                     <Stack direction="row">
                                         <div>Số điện thoại: </div>
                                         <div style={{ fontWeight: 'bold', marginLeft: '4px' }}>
-                                            {dataProduct.row.phone}
+                                            {dataProduct?.row?.phone}
                                         </div>
                                     </Stack>
                                 </Grid>
@@ -72,7 +72,7 @@ const ModalProduct = ({ open, setOpen, dataProduct }) => {
                                     <Stack direction="row">
                                         <div>Địa chỉ: </div>
                                         <div style={{ fontWeight: 'bold', marginLeft: '4px' }}>
-                                            {dataProduct.row.address}
+                                            {dataProduct?.row?.address}
                                         </div>
                                     </Stack>
                                 </Grid>
@@ -92,7 +92,7 @@ const ModalProduct = ({ open, setOpen, dataProduct }) => {
                                 dataProduct.value.map((product, index) => (
                                     <div key={index} className="flex shadow-md rounded-xl mb-4 bg-white p-2">
                                         <img
-                                            src={product.image}
+                                            src={product?.image}
                                             alt={index}
                                             className="object-cover h-[100px] w-[100px] p-4 shadow-sm rounded-xl mr-2"
                                         />
