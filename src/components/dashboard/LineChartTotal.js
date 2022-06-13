@@ -83,7 +83,7 @@ const LineChartTotal = ({ payments, isWebview }) => {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="createdAt" height={60} />
                     {!isWebview && <YAxis />}
-                    <Tooltip content={<CustomTooltip isWebvie={isWebview} />} />
+                    <Tooltip content={<CustomTooltip isWebview={isWebview} />} />
                     <Legend />
                     {isWebview ? (
                         <Line
