@@ -12,7 +12,7 @@ const CustomizedLabel = (props) => {
     );
 };
 
-const CustomTooltip = ({ active, payload, label }) => {
+const CustomTooltip = ({ active, payload, label, isWebview }) => {
     if (active && payload && payload.length) {
         return (
             <div className="bg-white shadow-lg rounded-lg p-4">
@@ -20,7 +20,8 @@ const CustomTooltip = ({ active, payload, label }) => {
                     {`Ngày : `} <span className="font-bold">{label}</span>
                 </p>
                 <p>
-                    {`Doanh thu : `} <span className="font-bold">{formatNumber(payload[0].value)}</span>
+                    {`${isWebview ? 'Tổng chi' : 'Doanh thu'} : `}{' '}
+                    <span className="font-bold">{formatNumber(payload[0].value)}</span>
                 </p>
             </div>
         );
@@ -82,7 +83,7 @@ const LineChartTotal = ({ payments, isWebview }) => {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="createdAt" height={60} />
                     {!isWebview && <YAxis />}
-                    <Tooltip content={<CustomTooltip />} />
+                    <Tooltip content={<CustomTooltip isWebvie={isWebview} />} />
                     <Legend />
                     {isWebview ? (
                         <Line

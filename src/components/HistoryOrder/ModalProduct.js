@@ -1,11 +1,10 @@
 import CloseIcon from '@mui/icons-material/Close';
-import { Button, Grid, IconButton, Stack, TextField } from '@mui/material';
+import { Grid, IconButton, Stack } from '@mui/material';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import Fade from '../../utils/Fade';
 import { formatNumber } from '../../utils/common';
 
 const style = {
@@ -21,7 +20,6 @@ const style = {
 };
 
 const ModalProduct = ({ open, setOpen, dataProduct }) => {
-    console.log('🚀 ~ file: ModalProduct.js ~ line 24 ~ ModalProduct ~ dataProduct', dataProduct);
     const handleClose = () => {
         setOpen(false);
     };
